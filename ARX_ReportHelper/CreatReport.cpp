@@ -392,7 +392,8 @@ static BOOL SaveReport(CString savePath)
 
 static bool wordOprate(CString templPath,CString savePath,CString& mineName)
 {
-	AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
+	//AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
+	SetCursor(AfxGetApp()->LoadCursor(IDC_CURSOR1));//使用标准光标
 	if(CheckDocIsUsing(templPath)) return false;
 	MyWord->CreateApp();
 	//MyWord->ShowApp();
@@ -427,7 +428,7 @@ static bool wordOprate(CString templPath,CString savePath,CString& mineName)
 	MyWord->ShowBookmarks(FALSE);
 	MyWord->CloseDocument();
 	MyWord->CloseApp();
-	AfxGetMainWnd()->EndWaitCursor();//结束等待光标
+	//AfxGetMainWnd()->EndWaitCursor();//结束等待光标
 	return ret;
 }
 

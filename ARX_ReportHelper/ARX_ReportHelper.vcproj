@@ -711,6 +711,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Help_Vnd.cur"
+				>
+			</File>
+			<File
 				RelativePath=".\icon.ico"
 				>
 			</File>
