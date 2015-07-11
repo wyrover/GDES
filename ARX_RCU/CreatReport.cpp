@@ -4,6 +4,7 @@
 #include "RcuHelper.h"
 #include "Rcu2.h"
 #include "../ArxHelper/ArxUtilHelper.h"
+#include "Resource.h"
 
 static CString GetAppPathDir()
 {
@@ -242,7 +243,8 @@ static BOOL SaveReport(CString savePath)
 
 static bool wordOprate(CString savePath,const AcDbObjectId& drill_site)
 {
-	AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
+	//AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
+	SetCursor(AfxGetApp()->LoadCursor(IDC_KLCUR));//使用光标
 	if(!MyWord->CreateDocuments())
 	{
 		return false;
@@ -266,7 +268,7 @@ static bool wordOprate(CString savePath,const AcDbObjectId& drill_site)
 	MyWord->ShowBookmarks(FALSE);
 	MyWord->CloseDocument();
 	MyWord->CloseApp();
-	AfxGetMainWnd()->EndWaitCursor();//结束等待光标
+	//AfxGetMainWnd()->EndWaitCursor();//结束等待光标
 	return ret;
 }
 

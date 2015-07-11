@@ -715,6 +715,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\icon.cur"
+				>
+			</File>
+			<File
 				RelativePath=".\icon.ico"
 				>
 			</File>
