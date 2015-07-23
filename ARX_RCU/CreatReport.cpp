@@ -4,6 +4,7 @@
 #include "RcuHelper.h"
 #include "Rcu2.h"
 #include "../ArxHelper/ArxUtilHelper.h"
+#include "Resource.h"
 
 static CString GetAppPathDir()
 {

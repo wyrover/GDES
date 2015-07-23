@@ -39,6 +39,7 @@
 #define IDC_MFCD_CHECK                  126
 #define IDC_DCSEL_CHECK                 127
 #define IDC_SFCR_CHECK                  128
+#define IDC_KLCUR                      128
 #define IDC_CEME_CHECK                  129
 #define IDC_DPCRD_CHECK                 130
 #define IDC_CES_CHECK                   131
@@ -81,7 +82,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        126
+#define _APS_NEXT_RESOURCE_VALUE        129
 #define _APS_NEXT_COMMAND_VALUE         32772
 #define _APS_NEXT_CONTROL_VALUE         164
 #define _APS_NEXT_SYMED_VALUE           102

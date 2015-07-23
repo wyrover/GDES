@@ -205,6 +205,16 @@ void ReportHelper::OpenCHMFile2()
 	filePath = BuildPath( GetAppPathDir(), fileName );
 	OpenWordDocument(filePath);
 }
+
+//帮助文档，说明书
+void ReportHelper::OpenHelpCHMFile()
+{
+	CString fileName,filePath;
+	fileName = _T("\\help\\doc.chm");
+	filePath = BuildPath( GetAppPathDir(), fileName );
+	OpenWordDocument(filePath);
+}
+
 void ReportHelper::CreatBaseReport()
 {
 	CAcModuleResourceOverride myResources;

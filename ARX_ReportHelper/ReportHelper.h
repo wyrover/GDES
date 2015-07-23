@@ -8,6 +8,7 @@ public:
 	static void CreatBaseReport();
 	static void OpenCHMFile();
 	static void OpenCHMFile2();
+	static void OpenHelpCHMFile();
 	static void ListShow();
 	static void ShowGasPlanDlg();
 	static void ShowEPCMFDDlg();
