@@ -31,6 +31,8 @@
 #define IDC_EDIT17                      118
 #define IDC_EDIT18                      119
 #define IDC_PORE_SIZE_EDIT              121
+#define IDD_DIALOG1                     121
+#define IDD_TEST_DLG                    121
 #define IDC_PORE_GAP_EDIT               122
 #define IDC_EDIT6                       123
 #define IDC_INDEX_EDIT                  123
@@ -68,7 +70,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        121
+#define _APS_NEXT_RESOURCE_VALUE        122
 #define _APS_NEXT_COMMAND_VALUE         32807
 #define _APS_NEXT_CONTROL_VALUE         125
 #define _APS_NEXT_SYMED_VALUE           102
