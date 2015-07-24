@@ -482,6 +482,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="test"
+				>
+				<File
+					RelativePath=".\AcadDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TestDialog.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Include Files"
@@ -576,6 +588,18 @@
 				</File>
 				<File
 					RelativePath=".\msword.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="test"
+				>
+				<File
+					RelativePath=".\AcadDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TestDialog.h"
 					>
 				</File>
 			</Filter>

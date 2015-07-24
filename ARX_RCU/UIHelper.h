@@ -11,4 +11,7 @@ public:
 	static void DestroyRcuDesignDockBar();
 	//向钻场设计对话框发送消息
 	static void SendMessage(unsigned int msgCode, ArxMsg* msgParam);
+
+	static void TestDlg1();
+	static void TestDlg2();
 };

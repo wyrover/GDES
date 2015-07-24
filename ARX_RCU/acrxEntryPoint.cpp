@@ -88,6 +88,14 @@ public:
 		//RcuHelper::VectorToAngleTest();
 	}
 
+	static void JL_TestDlg1()
+	{
+		UIHelper::TestDlg1();
+	}
+	static void JL_TestDlg2()
+	{
+		UIHelper::TestDlg2();
+	}
 } ;
 
 //-----------------------------------------------------------------------------
@@ -96,3 +104,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CARX_RCUApp)
 ACED_ARXCOMMAND_ENTRY_AUTO( CARX_RCUApp, JL, _RCUDlg, RCUDlg, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CARX_RCUApp, JL, _RCUReport, RCUReport, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CARX_RCUApp, JL, _TestV, TestV, ACRX_CMD_TRANSPARENT, NULL )
+
+ACED_ARXCOMMAND_ENTRY_AUTO( CARX_RCUApp, JL, _TestDlg1, TestDlg1, ACRX_CMD_TRANSPARENT, NULL )
+ACED_ARXCOMMAND_ENTRY_AUTO( CARX_RCUApp, JL, _TestDlg2, TestDlg2, ACRX_CMD_TRANSPARENT, NULL )
+
