@@ -1,13 +1,15 @@
 #pragma once
 
-#include "DockBarChildDlg.h"
+//#include "DockBarChildDlg.h"
+#include "Resource.h"
+#include "AcadDialog.h"
 
-class DataListDlg : public DockBarChildDlg
+class DataListDlg : public AcadDialog
 {
 	DECLARE_DYNAMIC(DataListDlg)
 
 public:
-	DataListDlg(CWnd* pParent = NULL);   // 标准构造函数
+	DataListDlg(CWnd* pParent = NULL, BOOL bModal = FALSE);
 	virtual ~DataListDlg();
 
 // 对话框数据
@@ -22,18 +24,17 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CComboBox m_typeList;
 	CListCtrl m_geList;
-
-	AcStringArray m_types;
 	bool m_initFinished;
 
 public:
 	virtual BOOL OnInitDialog();
-	virtual void OnClosing();
+	//virtual void OnClosing();
+	void UpdateData();
 	afx_msg void OnBnClickedUpdateBtn();
 	afx_msg void OnLvnItemchangedGeList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnColumnclickGeList(NMHDR *pNMHDR, LRESULT *pResult);
 	//afx_msg void OnBnClickedGeListReadTypeBtn();
 	afx_msg void OnBnClickedDataListHilightSelectBtn();
+	afx_msg void OnBnClickedExitBtn();
 };

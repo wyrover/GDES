@@ -26,12 +26,11 @@
 #define IDC_EDIT17                      118
 #define IDC_EDIT18                      119
 #define IDC_PORE_SIZE_EDIT              121
-#define IDC_CURSOR1                     125
-#define IDC_KLCUR                      126
-#define IDD_TEST_DLG                    128
 #define IDC_PORE_GAP_EDIT               122
 #define IDC_INDEX_EDIT                  123
 #define IDC_ALL_PUTOUT_CHECK            124
+#define IDC_CURSOR1                     125
+#define IDD_TEST_DLG                    128
 #define ID_RCU_LIST_DELETE              32773
 #define ID_RCU_LIST_LOCATE              32774
 #define ID_RCU_LIST_HILIGHT             32775

@@ -377,6 +377,10 @@
 			Filter="cpp;c;cc;cxx;def;idl;odl"
 			>
 			<File
+				RelativePath=".\AcadDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\acrxEntryPoint.cpp"
 				>
 			</File>
@@ -457,6 +461,10 @@
 			Name="Include Files"
 			Filter="h;hh;hxx"
 			>
+			<File
+				RelativePath=".\AcadDialog.h"
+				>
+			</File>
 			<File
 				RelativePath=".\BCMenu.h"
 				>

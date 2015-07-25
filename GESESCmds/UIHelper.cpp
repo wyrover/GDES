@@ -396,20 +396,24 @@ void UIHelper::ShowDataListDockBar(const AcDbObjectId& sObjId, const AcDbObjectI
 {
 	CAcModuleResourceOverride myResources;
 
-	CMDIFrameWnd* pAcadFrame = acedGetAcadFrame();
+	//CMDIFrameWnd* pAcadFrame = acedGetAcadFrame();
 
-	if( pDataList_DockBar == 0 )
-	{
-		pDataList_DockBar = new DataList_DockBar();
-		pDataList_DockBar->Create ( pAcadFrame, _T( "路径显示" ) ) ;
-		pDataList_DockBar->EnableDocking ( CBRS_ALIGN_ANY ) ;
-		pDataList_DockBar->RestoreControlBar () ;
+	//if( pDataList_DockBar == 0 )
+	//{
+	//	pDataList_DockBar = new DataList_DockBar();
+	//	pDataList_DockBar->Create ( pAcadFrame, _T( "路径显示" ) ) ;
+	//	pDataList_DockBar->EnableDocking ( CBRS_ALIGN_ANY ) ;
+	//	pDataList_DockBar->RestoreControlBar () ;
 
-	}
-	//设置路径查找的始末点所在分支(代码比较恶心)
-	pDataList_DockBar->mChildDlg.sObjId = sObjId;
-	pDataList_DockBar->mChildDlg.tObjId = tObjId;
-	pAcadFrame->ShowControlBar( pDataList_DockBar, TRUE, FALSE );
+	//}
+	////设置路径查找的始末点所在分支(代码比较恶心)
+	//pDataList_DockBar->mChildDlg.sObjId = sObjId;
+	//pDataList_DockBar->mChildDlg.tObjId = tObjId;
+	//pAcadFrame->ShowControlBar( pDataList_DockBar, TRUE, FALSE );
+	DataListDlg *dlg = new DataListDlg(acedGetAcadFrame(),FALSE);
+	dlg->sObjId = sObjId;
+	dlg->tObjId = tObjId;
+	dlg->Run();
 }
 
 void UIHelper::DestroyDataListDockBar()

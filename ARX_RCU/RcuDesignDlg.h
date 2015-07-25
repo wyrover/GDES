@@ -1,18 +1,20 @@
 #pragma once
 
-#include "DockBarChildDlg.h"
+#include "Resource.h"
+#include "AcadDialog.h"
+//#include "DockBarChildDlg.h"
 /**
 	CButtonST使用简介
 	http://www.cnblogs.com/lidabo/archive/2012/12/17/2821122.html
 */
 
 //石门揭煤设计主对话框
-class RcuDesignDlg : public DockBarChildDlg
+class RcuDesignDlg : public AcadDialog
 {
 	DECLARE_DYNAMIC(RcuDesignDlg)
 
 public:
-	RcuDesignDlg(CWnd* pParent = NULL);   // 标准构造函数
+	RcuDesignDlg(CWnd* pParent = NULL, BOOL bModal = FALSE);
 	virtual ~RcuDesignDlg();
 
 // 对话框数据

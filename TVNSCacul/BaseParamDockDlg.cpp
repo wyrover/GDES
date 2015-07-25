@@ -11,25 +11,23 @@
 #include "../MineGE/DataHelper.h"
 #include "../MineGE/FieldHelper.h"
 
-IMPLEMENT_DYNAMIC(BaseParamDockDlg, CAcUiDialog)
-
-BaseParamDockDlg::BaseParamDockDlg(CWnd* pParent /*=NULL*/)
-: CAcUiDialog(BaseParamDockDlg::IDD, pParent)
+IMPLEMENT_DYNAMIC(BaseParamDockDlg, AcadDialog)
+BaseParamDockDlg::BaseParamDockDlg( CWnd* pParent /*= NULL*/, BOOL bModal /*= FALSE*/ )
+: AcadDialog(BaseParamDockDlg::IDD, pParent,bModal)
 {
 
 }
-
 BaseParamDockDlg::~BaseParamDockDlg()
 {
 }
 
 void BaseParamDockDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CAcUiDialog::DoDataExchange(pDX);
+	AcadDialog::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(BaseParamDockDlg, CAcUiDialog)
+BEGIN_MESSAGE_MAP(BaseParamDockDlg, AcadDialog)
 	ON_REGISTERED_MESSAGE( AFX_WM_PROPERTY_CHANGED, OnPropertyChanged )
 END_MESSAGE_MAP()
 
@@ -86,11 +84,11 @@ void BaseParamDockDlg::writePropertyData()
 
 BOOL BaseParamDockDlg::OnInitDialog()
 {
-	CAcUiDialog::OnInitDialog();
+	AcadDialog::OnInitDialog();
 	if(!SingleDataObjectHelper::GetObjectId(_T("计算参数"),m_objId)) return FALSE;
 	//创建, 定位, 显示CMFCPropertyGridCtrl
 	CRect rect;
-	GetDlgItem( IDC_BASE_PARAM_GRID )->GetWindowRect( &rect );
+	GetDlgItem( IDC_PROPERTY_GRID )->GetWindowRect( &rect );
 	ScreenToClient( &rect );
 	m_propertyDataList.Create( WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER, rect, this, ( UINT ) - 1 );
 	//让bool值变成“是/否”

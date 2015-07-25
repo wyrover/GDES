@@ -9,21 +9,27 @@ RcuDesiginDockBarDlg* pRcuDesiginDockBarDlg = 0;
 
 void UIHelper::ShowRcuDesignDockBar()
 {
+	//CAcModuleResourceOverride myResources;
+
+	//CMDIFrameWnd* pAcadFrame = acedGetAcadFrame();
+
+	//if( pRcuDesiginDockBarDlg == 0 )
+	//{
+	//	pRcuDesiginDockBarDlg = new RcuDesiginDockBarDlg();
+	//	pRcuDesiginDockBarDlg->Create ( pAcadFrame, _T("石门揭煤设计") ) ;
+	//	pRcuDesiginDockBarDlg->EnableDocking ( CBRS_ALIGN_ANY ) ;
+	//	pRcuDesiginDockBarDlg->RestoreControlBar () ;
+	//}
+	//pAcadFrame->ShowControlBar( pRcuDesiginDockBarDlg, TRUE, FALSE );
+
+	////刷新界面
+	//UIHelper::SendMessage(WM_RCU_UPDATE, 0);
 	CAcModuleResourceOverride myResources;
+	//非模态对话框(必须用new,否则会有内存错误)
+	RcuDesignDlg* dlg = new RcuDesignDlg(acedGetAcadFrame(), FALSE);
+	//关闭模态对话框后,会通过消息来删除内存
+	dlg->Run();
 
-	CMDIFrameWnd* pAcadFrame = acedGetAcadFrame();
-
-	if( pRcuDesiginDockBarDlg == 0 )
-	{
-		pRcuDesiginDockBarDlg = new RcuDesiginDockBarDlg();
-		pRcuDesiginDockBarDlg->Create ( pAcadFrame, _T("石门揭煤设计") ) ;
-		pRcuDesiginDockBarDlg->EnableDocking ( CBRS_ALIGN_ANY ) ;
-		pRcuDesiginDockBarDlg->RestoreControlBar () ;
-	}
-	pAcadFrame->ShowControlBar( pRcuDesiginDockBarDlg, TRUE, FALSE );
-
-	//刷新界面
-	UIHelper::SendMessage(WM_RCU_UPDATE, 0);
 }
 
 void UIHelper::DestroyRcuDesignDockBar()

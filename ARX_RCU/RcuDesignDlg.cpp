@@ -176,14 +176,14 @@ static CString FormatPoreDlgTitle(const CString& ds_name)
 
 // RcuDesignDlg 对话框
 
-IMPLEMENT_DYNAMIC(RcuDesignDlg, DockBarChildDlg)
+IMPLEMENT_DYNAMIC(RcuDesignDlg, AcadDialog)
 
-RcuDesignDlg::RcuDesignDlg(CWnd* pParent /*=NULL*/)
-	: DockBarChildDlg(RcuDesignDlg::IDD, pParent)
+RcuDesignDlg::RcuDesignDlg( CWnd* pParent, BOOL bModal )
+	: AcadDialog(RcuDesignDlg::IDD, pParent, bModal)
 	, m_allPut(FALSE)
 {
-}
 
+}
 RcuDesignDlg::~RcuDesignDlg()
 {
 	//ClearListCtrlItemDatas(m_list);
@@ -191,12 +191,12 @@ RcuDesignDlg::~RcuDesignDlg()
 
 void RcuDesignDlg::DoDataExchange(CDataExchange* pDX)
 {
-	DockBarChildDlg::DoDataExchange(pDX);
+	AcadDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_list);
 	DDX_Check(pDX, IDC_ALL_PUTOUT_CHECK, m_allPut);
 }
 
-BEGIN_MESSAGE_MAP(RcuDesignDlg, DockBarChildDlg)
+BEGIN_MESSAGE_MAP(RcuDesignDlg, AcadDialog)
 	ON_BN_CLICKED(IDC_BUTTON4, &RcuDesignDlg::OnBnClickedExport)
 
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &RcuDesignDlg::OnNMDblclkList1)
@@ -223,7 +223,7 @@ END_MESSAGE_MAP()
 
 BOOL RcuDesignDlg::OnInitDialog()
 {
-	DockBarChildDlg::OnInitDialog();
+	AcadDialog::OnInitDialog();
 
 	m_list.SetExtendedStyle( m_list.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES );
 	AcStringArray drill_fields;
@@ -307,7 +307,7 @@ void RcuDesignDlg::OnNMRclickList1(NMHDR *pNMHDR, LRESULT *pResult)
 void RcuDesignDlg::OnAddDrillSiteCommand()
 {
 	//切换controlbar的显示
-	ControlBarShowSwitch cb_switch(this);
+	//ControlBarShowSwitch cb_switch(this);
 
 	//切换文档锁
 	DocumentLockSwitch lock_switch;
@@ -381,7 +381,7 @@ void RcuDesignDlg::OnModifyDrillSiteCommand()
 	}
 
 	//切换controlbar的显示
-	ControlBarShowSwitch cb_switch(this);
+	//ControlBarShowSwitch cb_switch(this);
 
 	//从对话框中更新数据
 	if(UpdateDrillSiteDataFromDlg(pData1->objId, ds_link, cs_link))
