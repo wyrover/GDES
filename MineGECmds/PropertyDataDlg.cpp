@@ -32,8 +32,11 @@ public:
 		//第1个是D，第2个是Q，第3个是V
 		double valueD = m_pProps[0]->GetValue().dblVal;
 		double valueQ = m_pProps[1]->GetValue().dblVal;
-		//double valueV = m_pProps[2]->GetValue().dblVal;
-		return valueQ / pow(valueD*0.001/0.1457,2);
+		double valueV = m_pProps[2]->GetValue().dblVal;
+		if(CMP(pow(valueD*0.001/0.1457,2),0)) return valueV;
+		double ret = valueQ / pow(valueD*0.001/0.1457,2);
+		if(ret <= 0) ret = 0;
+		return ret;
 	}
 };
 
@@ -48,7 +51,9 @@ public:
 		double valueD = m_pProps[0]->GetValue().dblVal;
 		//double valueQ = m_pProps[1]->GetValue().dblVal;
 		double valueV = m_pProps[2]->GetValue().dblVal;
-		return valueV * pow(valueD*0.001/0.1457, 2);
+		double ret = valueV * pow(valueD*0.001/0.1457, 2);
+		if(ret <= 0) ret = 0;
+		return ret;
 	}
 };
 
@@ -60,10 +65,13 @@ public:
 	virtual double caculate()
 	{
 		//第1个是D，第2个是Q，第3个是V
-		//double valueD = m_pProps[0]->GetValue().dblVal;
+		double valueD = m_pProps[0]->GetValue().dblVal;
 		double valueQ = m_pProps[1]->GetValue().dblVal;
 		double valueV = m_pProps[2]->GetValue().dblVal;
-		return 0.1457*sqrt(valueQ/valueV) * 1000;
+		if(CMP(valueV,0)) return valueD;
+		double ret = 0.1457*sqrt(valueQ/valueV) * 1000;
+		if(ret <= 0) ret = 0;
+		return ret;
 	}
 };
 
@@ -78,8 +86,9 @@ public:
 		//double valueH = m_pProps[0]->GetValue().dblVal;
 		double valueGJ = m_pProps[1]->GetValue().dblVal;
 		double valueY = m_pProps[2]->GetValue().dblVal;
-
-		return 0;
+		double ret = valueGJ + valueY;
+		if( ret <= 0 ) ret = 0;
+		return ret;
 	}
 };
 
@@ -94,8 +103,9 @@ public:
 		double valueH = m_pProps[0]->GetValue().dblVal;
 		//double valueGJ = m_pProps[1]->GetValue().dblVal;
 		double valueY = m_pProps[2]->GetValue().dblVal;
-
-		return -1.0*valueY + valueH;
+		double ret = -1.0*valueY + valueH;
+		if( ret <= 0 ) ret = 0;
+		return ret;
 	}
 };
 
@@ -116,6 +126,11 @@ public:
 };
 
 //已知GD、VD、FD计算DD
+//valueGD 工作面瓦斯浓度
+//valueVD 风排瓦斯量
+//valueFD 工作面配风量
+//valueDD 瓦斯绝对涌出量
+
 class SyncFunctorDD : public SyncFunctor
 {
 public:
@@ -127,7 +142,7 @@ public:
 		double valueFD = m_pProps[2]->GetValue().dblVal;
 		double valueDD = m_pProps[3]->GetValue().dblVal;
 
-		if(valueFD <= 0) 
+		if(CMP(valueFD,0)) 
 			return valueDD;
 		else
 			return valueVD/valueFD * 100;
@@ -180,6 +195,9 @@ static void LinkSyncProperties_Gas(CMFCPropertyGridCtrl* propertyDataList, AcPro
 	CustomGridProperty *pProQ = (CustomGridProperty*)pm[field2]->at(0);
 	CustomGridProperty *pProV = (CustomGridProperty*)pm[field3]->at(0);
 
+	//pProD 瓦斯管内径
+	//pProQ 瓦斯管中的瓦斯流量
+	//pProV 瓦斯管中瓦斯平均流量
 	pProps->append(pProD);
 	pProps->append(pProQ);
 	pProps->append(pProV);
@@ -246,7 +264,7 @@ static void LinkSyncProperties_Flow(CMFCPropertyGridCtrl* propertyDataList, AcPr
 	//pProGD->setSyncFun(new SyncFunctorD(*pProps));
 	//pProVD->setSyncFun(new SyncFunctorQ(*pProps));
 	//pProFD->setSyncFun(new SyncFunctorV(*pProps));
-	pProDD->setSyncFun(new SyncFunctorDD(*pProps));
+	pProGD->setSyncFun(new SyncFunctorDD(*pProps));
 
 	ClearPropertyMap(pm);
 }

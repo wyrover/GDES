@@ -79,6 +79,9 @@
 //瓦斯传感器
 #include "GasSensorGEDraw.h"
 
+//CO传感器
+#include "COSensorGEDraw.h"
+
 //钻孔
 #include "SimplePoreDraw.h"
 //钻场
@@ -196,6 +199,9 @@ void DefGEPlugin::initialize( MineGEDrawManager* pGEDrawManager )
 	//瓦斯传感器
 	REGISTER_MINEGE_DRAW( GasSensorGE, GasSensorGEDraw );
 
+	//CO传感器
+	REGISTER_MINEGE_DRAW(COSensorGE,COSensorGEDraw);
+
 	//钻孔
 	REGISTER_MINEGE_DRAW( Pore, SimplePoreDraw );
 	//钻场
@@ -288,6 +294,9 @@ void DefGEPlugin::unInitialize( MineGEDrawManager* pGEDrawManager )
 
 	//瓦斯传感器
 	UNREGISTER_MINEGE_DRAW( GasSensorGE, GasSensorGEDraw );
+
+	//CO传感器
+	UNREGISTER_MINEGE_DRAW(COSensorGE,COSensorGEDraw);
 
 	//钻孔
 	UNREGISTER_MINEGE_DRAW( Pore, SimplePoreDraw );

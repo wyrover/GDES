@@ -185,6 +185,22 @@ void PropertyDataDlgHelper::InputPropertyDataDlg( const AcDbObjectId& objId, con
 		if(!AddNearByFields(objId,func)) return;
 	}
 
+	if(_T("工作面瓦斯抽采率") == func)
+	{
+		CString strGD,strVD,strGDold,strVDold;
+		DataHelper::GetPropertyData(objId,_T("瓦斯绝对涌出量"),strGD);
+		DataHelper::GetPropertyData(objId,_T("风排瓦斯量"),strVD);
+		DataHelper::GetPropertyData(objId,_T("当月工作面月平均瓦斯抽采量"),strGDold);
+		DataHelper::GetPropertyData(objId,_T("当月工作面风排瓦斯量"),strVDold);
+		double ret = _tstof(strGD) - _tstof(strVD);
+		CString strRet;
+		strRet.Format(_T("%.2lf"),ret);
+		if(_tstof(strGDold) <= 0 && ret >= 0)
+			DataHelper::SetPropertyData(objId,_T("当月工作面月平均瓦斯抽采量"),strRet);
+		if(_tstof(strVDold) <= 0)
+			DataHelper::SetPropertyData(objId,_T("当月工作面风排瓦斯量"),strVD);
+	}
+
 	//if (_T("管路阻力") == func)
 	//{
 	//	ValueHelper::setGasAirValue(objId);

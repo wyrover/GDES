@@ -381,6 +381,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\COSensorGEDraw.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DefGEPlugin.cpp"
 				>
 			</File>
@@ -665,6 +669,10 @@
 			Name="Include Files"
 			Filter="h;hh;hxx"
 			>
+			<File
+				RelativePath=".\COSensorGEDraw.h"
+				>
+			</File>
 			<File
 				RelativePath=".\DefGEPlugin.h"
 				>

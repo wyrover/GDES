@@ -504,6 +504,10 @@
 				Name="Sensor"
 				>
 				<File
+					RelativePath=".\COSensorGE.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\DifferPressSensorGE.cpp"
 					>
 				</File>
@@ -640,6 +644,10 @@
 			<Filter
 				Name="Sensor"
 				>
+				<File
+					RelativePath=".\COSensorGE.h"
+					>
+				</File>
 				<File
 					RelativePath=".\DifferPressSensorGE.h"
 					>
