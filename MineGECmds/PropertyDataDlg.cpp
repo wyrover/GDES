@@ -22,6 +22,34 @@ typedef std::map<CString, PropertyArray*> PropertyMap;
 #define CMP(x1,x2) fabs(x1 - x2) < TOLERANCE
 #define NOT_EQUAL_ZERO(x) !(CMP(_tstof(x),0))
 
+static CString GetAppPathDir()
+{
+	TCHAR szModulePath[_MAX_PATH];
+	GetModuleFileName( _hdllInstance, szModulePath, _MAX_PATH );
+
+	TCHAR drive[_MAX_DRIVE];
+	TCHAR dir[_MAX_DIR];
+	_tsplitpath( szModulePath, drive, dir, NULL, NULL );
+
+	TCHAR szPath[_MAX_PATH] = {0};
+	_tmakepath( szPath, drive, dir, NULL, NULL );
+
+	return CString( szPath );
+}
+
+static CString BuildPath( const CString& dir, const CString& fileName )
+{
+	CString path;
+	path.Format( _T( "%s%s" ), dir, fileName );
+	return path;
+}
+
+static bool IsSpecialFunc(CString& func)
+{
+	if(func.IsEmpty() || _T("基本信息") == func || _T("瓦斯泵选型参考") == func) return true;
+	return false;
+}
+
 //已知D、Q计算V
 class SyncFunctorV : public SyncFunctor
 {
@@ -179,6 +207,56 @@ static void ClearPropertyMap(PropertyMap& pm)
 	}
 }
 
+static void ReadAirFactor(const COleVariant& changedValue,CString& strValue)
+{
+	CString dataDirName = _T( "Datas\\" );
+	CString fileName =BuildPath ( BuildPath( GetAppPathDir(), dataDirName ),_T("gasAir.txt") );
+
+	CString gasValueStr = (CString)changedValue;
+
+	if(gasValueStr.IsEmpty()) gasValueStr = _T("0");
+	AcIfstream inFile(fileName);
+	AcStringArray fields,values;
+	if(!inFile) return;
+	CString gasValueStr0,gasAirValueStr;
+	while( !inFile.eof() )
+	{
+		ACHAR gasValueChar[_MAX_PATH], gasAirValueChar[_MAX_PATH];
+		inFile >> gasValueChar >> gasAirValueChar;
+		if(inFile.fail()) break;
+		gasValueStr0.Format(_T("%s"),gasValueChar);
+		if(CMP(_tstof(gasValueStr), _tstof(gasValueStr0)))
+		{
+			gasAirValueStr.Format(_T("%s"),gasAirValueChar);
+			break;
+		}
+	}
+
+	inFile.close();
+	strValue = gasAirValueStr;
+}
+
+static void AirFactorHelper(const COleVariant& changedValue,CMFCPropertyGridCtrl* propertyDataList)
+{
+	CString value;
+	ReadAirFactor(changedValue,value);
+	PropertyMap pm;
+	CString field = _T("混合瓦斯对空气的相对密度");
+	GetPropertyByFiled(field,propertyDataList,pm);
+	if(pm[field] == NULL) return;
+
+	PropertyArray &pa = *(pm[field]);
+	for(PropertyArray::iterator a_itr=pa.begin(); a_itr!=pa.end();a_itr++)
+	{
+		CMFCPropertyGridProperty *pProp = *a_itr;
+		COleVariant origin = pProp->GetOriginalValue();
+		COleVariant v;
+		v.vt = origin.vt;
+		v = _tstof(value);
+		pProp->SetValue(v);
+	}
+}
+
 //关联管径及流速
 static void LinkSyncProperties_Gas(CMFCPropertyGridCtrl* propertyDataList, AcPropertyArray* pProps)
 {
@@ -205,7 +283,6 @@ static void LinkSyncProperties_Gas(CMFCPropertyGridCtrl* propertyDataList, AcPro
 	pProD->setSyncFun(new SyncFunctorD(*pProps));
 	pProQ->setSyncFun(new SyncFunctorQ(*pProps));
 	pProV->setSyncFun(new SyncFunctorV(*pProps));
-
 	ClearPropertyMap(pm);
 }
 
@@ -267,34 +344,6 @@ static void LinkSyncProperties_Flow(CMFCPropertyGridCtrl* propertyDataList, AcPr
 	pProGD->setSyncFun(new SyncFunctorDD(*pProps));
 
 	ClearPropertyMap(pm);
-}
-
-static CString GetAppPathDir()
-{
-	TCHAR szModulePath[_MAX_PATH];
-	GetModuleFileName( _hdllInstance, szModulePath, _MAX_PATH );
-
-	TCHAR drive[_MAX_DRIVE];
-	TCHAR dir[_MAX_DIR];
-	_tsplitpath( szModulePath, drive, dir, NULL, NULL );
-
-	TCHAR szPath[_MAX_PATH] = {0};
-	_tmakepath( szPath, drive, dir, NULL, NULL );
-
-	return CString( szPath );
-}
-
-static CString BuildPath( const CString& dir, const CString& fileName )
-{
-	CString path;
-	path.Format( _T( "%s%s" ), dir, fileName );
-	return path;
-}
-
-static bool IsSpecialFunc(CString& func)
-{
-	if(func.IsEmpty() || _T("基本信息") == func || _T("瓦斯泵选型参考") == func) return true;
-	return false;
 }
 
 IMPLEMENT_DYNAMIC( PropertyDataDlg, CDialog )
@@ -640,56 +689,6 @@ bool PropertyDataDlg::caculate()
 		return true;
 	}
 	return true;
-}
-
-static void ReadAirFactor(const COleVariant& changedValue,CString& strValue)
-{
-	CString dataDirName = _T( "Datas\\" );
-	CString fileName =BuildPath ( BuildPath( GetAppPathDir(), dataDirName ),_T("gasAir.txt") );
-
-	CString gasValueStr = (CString)changedValue;
-
-	if(gasValueStr.IsEmpty()) gasValueStr = _T("0");
-	AcIfstream inFile(fileName);
-	AcStringArray fields,values;
-	if(!inFile) return;
-	CString gasValueStr0,gasAirValueStr;
-	while( !inFile.eof() )
-	{
-		ACHAR gasValueChar[_MAX_PATH], gasAirValueChar[_MAX_PATH];
-		inFile >> gasValueChar >> gasAirValueChar;
-		if(inFile.fail()) break;
-		gasValueStr0.Format(_T("%s"),gasValueChar);
-		if(CMP(_tstof(gasValueStr), _tstof(gasValueStr0)))
-		{
-			gasAirValueStr.Format(_T("%s"),gasAirValueChar);
-			break;
-		}
-	}
-
-	inFile.close();
-	strValue = gasAirValueStr;
-}
-
-static void AirFactorHelper(const COleVariant& changedValue,CMFCPropertyGridCtrl* propertyDataList)
-{
-	CString value;
-	ReadAirFactor(changedValue,value);
-	PropertyMap pm;
-	CString field = _T("混合瓦斯对空气的相对密度");
-	GetPropertyByFiled(field,propertyDataList,pm);
-	if(pm[field] == NULL) return;
-
-	PropertyArray &pa = *(pm[field]);
-	for(PropertyArray::iterator a_itr=pa.begin(); a_itr!=pa.end();a_itr++)
-	{
-		CMFCPropertyGridProperty *pProp = *a_itr;
-		COleVariant origin = pProp->GetOriginalValue();
-		COleVariant v;
-		v.vt = origin.vt;
-		v = _tstof(value);
-		pProp->SetValue(v);
-	}
 }
 
 void PropertyDataDlg::SyncPropertyDatas(const CString& filedName, COleVariant& changedValue,CMFCPropertyGridProperty*pProp )
