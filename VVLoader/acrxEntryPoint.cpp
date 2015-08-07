@@ -79,7 +79,7 @@ public:
 
 		//初始化log4cplus日志系统
 		//为了保证日志功能正常使用，在加载所有模块之前初始化日志系统
-		log_init(_T(".\\Datas\\log4cplus.properties"));
+		//log_init(_T(".\\Datas\\log4cplus.properties"));
 
 		// 修改cad系统全局精度
 		pTS = new TolSetter( GLOBAL_TOLERANCE );
@@ -127,7 +127,7 @@ public:
 		acutPrintf( _T( "\nVVLoader::On_kUnloadAppMsg\n" ) );
 
 		//关闭log4cplus日志系统
-		log_uinit();
+		//log_uinit();
 
 		return ( retCode ) ;
 	}
