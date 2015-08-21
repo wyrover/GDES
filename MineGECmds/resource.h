@@ -59,7 +59,6 @@
 #define IDC_RADIO5                      121
 #define IDC_MINH2_EDIT                  121
 #define IDC_VAR_NAME_LIST               122
-#define IDC_IN_BUTTON                   122
 #define IDC_DATA_INPUT_TYPE_NAME        123
 #define IDC_BUTTON6                     124
 #define IDC_DATA_IMPORT_TYPE_NAME_BTN   124

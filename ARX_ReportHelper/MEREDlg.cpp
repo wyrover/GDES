@@ -44,7 +44,8 @@ BOOL MEREDlg::OnInitDialog()
 	ReportDataHelper::ReadDatas(m_objName,datasVector,2);
 	if(datasVector.empty()) 
 	{
-		m_methodCombBox.SetCurSel(0);
+		int methodIndx = EvaluMethod(m_objName);
+		m_methodCombBox.SetCurSel(methodIndx);
 		UpdateData(FALSE);
 		return TRUE;
 	}

@@ -35,7 +35,6 @@ void GasWidthCaculDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(GasWidthCaculDlg, CDialog)
 	ON_BN_CLICKED(IDOK, &GasWidthCaculDlg::OnBnClickedOk)
-	ON_BN_CLICKED(IDC_IN_BUTTON, &GasWidthCaculDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 BOOL GasWidthCaculDlg::OnInitDialog()
@@ -94,12 +93,6 @@ void GasWidthCaculDlg::OnBnClickedOk()
 
 	WriteData();
 	//acutPrintf(_T("\n结果:%f\n"),H1);
-	OnOK();
-}
-
-void GasWidthCaculDlg::OnBnClickedButton1()
-{
-	// TODO: 在此添加控件通知处理程序代码
 	OnOK();
 }
 

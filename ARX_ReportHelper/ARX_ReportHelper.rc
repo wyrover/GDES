@@ -223,7 +223,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "确定",IDOK,12,70,50,14
     PUSHBUTTON      "取消",IDCANCEL,81,70,50,14
-    CONTROL         "是否满足抽采达标要求",IDC_MERE_YESNO_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,26,50,91,14
+    CONTROL         "能满足抽采达标要求",IDC_MERE_YESNO_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,29,50,85,14
     LTEXT           "评判方式",IDC_STATIC,22,33,36,9
     COMBOBOX        IDC_MERE_METHOD_COMBO,59,32,62,15,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_DES_EDIT,12,5,120,18,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | ES_WANTRETURN | NOT WS_BORDER
@@ -334,11 +334,6 @@ END
 //
 
 IDB_DELETE_BITMAP       BITMAP                  "delete.bmp"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Cursor
-//
 
 /////////////////////////////////////////////////////////////////////////////
 //

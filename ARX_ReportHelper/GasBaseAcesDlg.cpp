@@ -73,6 +73,18 @@ void GasBaseAcesDlg::SetToolTip( int itemID,const CString& tooltip )
 	CWnd* pW=GetDlgItem(itemID);//得到控件的指针
 	m_tt.AddTool(pW,tooltip);//为此控件添加tip
 }
+
+//检测是否是现场核查的评判方式
+int GasBaseAcesDlg::EvaluMethod( const CString& objectName )
+{
+	//返回值为0则是现场核查，1则是资料审查
+	int ret = 0;
+	if(RET_GASSYS_OBJCT_NAME == objectName 
+		|| RET_GASPUMP_OBJCT_NAME == objectName
+		|| RET_MERSURE_OBJCT_NAME == objectName) ret = 0;
+	else ret = 1;
+	return ret;
+}
 //BOOL GasBaseAcesDlg::readDataFromFile( const CString& txtName, AcStringArray& datasArray )
 //{
 //	CString dataDirName = _T( "Datas\\BaseTemp\\" );

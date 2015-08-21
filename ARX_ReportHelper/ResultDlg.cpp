@@ -48,7 +48,8 @@ BOOL ResultDlg::OnInitDialog()
 	InitListCtrl();
 	if(datasVector.empty()) 
 	{
-		m_methodCombBox.SetCurSel(0);
+		int methodIndx = EvaluMethod(m_objectName);
+		m_methodCombBox.SetCurSel(methodIndx);
 		return TRUE;
 	}
 	m_methodCombBox.SetWindowText(datasVector[1][1]);
@@ -154,18 +155,19 @@ void ResultDlg::OnNMClickResultList(NMHDR *pNMHDR, LRESULT *pResult)
 	//acutPrintf(_T("\n%d\n"),nIndex);
 
 	//如果当前没有选中则选中
-	//如果当前已经是选中状态则取消选中
+	//如果当前已经是选中状态则不作处理
 	if(m_resultCtrlList.GetCheck(nIndex))
 	{
-		m_resultCtrlList.SetCheck(nIndex, FALSE);
+		//m_resultCtrlList.SetCheck(nIndex, FALSE);
 	}
 	else
 	{
 		m_resultCtrlList.SetCheck(nIndex,TRUE); //set checked
 		UncheckOthers(m_resultCtrlList,nIndex);
-		showReasonsDescDlg(nIndex);
 	}
-	
+
+	showReasonsDescDlg(nIndex);
+
 	*pResult = 0;
 }
 

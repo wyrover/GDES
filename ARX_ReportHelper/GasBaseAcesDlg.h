@@ -1,7 +1,7 @@
 #pragma once
 //#include "Resource.h"
 //#include "CListCtrl_DataModel.h"
-//#include "config.h"
+#include "config.h"
 #include "ReportDataHelper.h"
 #include "dlimexp.h"
 
@@ -31,7 +31,7 @@ protected:
 	CString GetAppPathDir();
 	CString BuildPath( const CString& dir, const CString& fileName );
 	void SetToolTip(int itemID,const CString& tooltip);
-	
+	int EvaluMethod(const CString& objectName);
 	DECLARE_MESSAGE_MAP()
 
 protected:
