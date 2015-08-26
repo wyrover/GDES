@@ -393,7 +393,7 @@ void writeReg( QString& cadPath)
 bool delTestKeybyWinAPI()
 {
 	TCHAR cadKey[MAX_PATH];
-	_tcscpy(cadKey, _T("Software\\Autodesk\\AutoCAD\\R18.0\\ACAD-8001:804\\Applications\\test"));
+	_tcscpy(cadKey, _T("Software\\Autodesk\\AutoCAD\\R18.0\\ACAD-8001:804\\Applications"));
 
 	DWORD dwAccess = KEY_ALL_ACCESS;
 	//≈–∂œ «∑Ò64Œª
@@ -403,14 +403,15 @@ bool delTestKeybyWinAPI()
 	}
 
 	CRegistry reg;
-	bool ret = reg.Open( cadKey, HKEY_LOCAL_MACHINE, dwAccess);
-	if(ret)
-	{
-		reg.DeleteKey();
-	}
-	reg.Close();
+	reg.Clear(HKEY_LOCAL_MACHINE,cadKey,_T("test"),dwAccess);
+	//bool ret = reg.Open( cadKey, HKEY_LOCAL_MACHINE, dwAccess);
+	//if(ret)
+	//{
+	//	reg.DeleteKey();
+	//}
+	//reg.Close();
 
-	return ret;
+	return true;
 }
 
 bool delInfomationKeybyWinAPI()

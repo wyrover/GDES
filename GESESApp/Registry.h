@@ -132,7 +132,7 @@ public:
 	static bool	KeyExists(LPCTSTR lpszRegPath, HKEY hRootKey = HKEY_LOCAL_MACHINE);
 	bool		SubKeyExists(LPCTSTR lpszSub);	
 	
-	void		DeleteKey();	
+	void		Clear(HKEY hRoot,LPCTSTR strPath, LPCTSTR strSub,DWORD dwAccess);	
 
 	__inline	DWORD GetFlags()	{	return __dwFlags; }
 	__inline	int Count()		{	return _reEntries.size(); }

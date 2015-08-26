@@ -21,6 +21,8 @@
 #include <windows.h>
 #include "Registry.h"
 #include "tchar.h"
+#include <Shlwapi.h>
+#pragma comment(lib,"Shlwapi.lib")
 
 #pragma warning (disable : 4706)
 
@@ -831,17 +833,22 @@ bool CRegistry::Refresh() {
  *  NOTE: Use extreme caution when calling this function
  */
 
-void CRegistry::DeleteKey() {
+void CRegistry::Clear(HKEY hRoot,LPCTSTR strPath, LPCTSTR strSub, DWORD dwAccess) {
 
-	OSVERSIONINFO osvi;
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	
-	if (GetVersionEx(&osvi) && osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
-		DeleteKey(_hRootKey, _lpszSubKey);
-	else 
-		RegDeleteKey(_hRootKey, _lpszSubKey);
+	HKEY key;
+	LONG ret1 = RegOpenKeyEx( hRoot, strPath, 0, dwAccess, &key );
+	ret1 = SHDeleteKey( key, strSub);//删除项以及所有子健
+	RegCloseKey( key );
 
-	Close();
+	//OSVERSIONINFO osvi;
+	//osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	//
+	//if (GetVersionEx(&osvi) && osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
+	//	DeleteKey(_hRootKey, _lpszSubKey);
+	//else 
+	//	RegDeleteKey(_hRootKey, _lpszSubKey);
+
+	//Close();
 }
 
 
