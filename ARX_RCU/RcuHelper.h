@@ -40,9 +40,9 @@ public:
 	//计算煤层面参数
 	static bool CaculCoalSurfParam(DrillSiteLink& ds_link, CoalSurfaceLink& cs_link);
 	//计算钻场的钻孔相对坐标(基点是钻场底帮点)
-	static bool CaculRelativeOpenPorePts(CoalSurfaceLink& cs_link, DrillSiteLink& ds_link, AcGePoint3dArray& pts);
+	static bool CaculRelativeOpenPorePts(CoalSurfaceLink& cs_link,DrillSiteLink& ds_link,AcGePoint3dArray& pts,AcGePoint3dArray& drawPts);
 	//计算煤层的钻孔相对坐标(基点是煤层面的中心点)
-	static bool CaculRelativeClosePorePts(CoalSurfaceLink& cs_link, AcGePoint3dArray& pts);
+	static bool CaculRelativeClosePorePts(CoalSurfaceLink& cs_link,AcGePoint3dArray& pts,AcGePoint3dArray& drawPts);
 
 	//创建钻场和煤层图元(rg_link和cs_link的数据会与新增的图元关联，并被更新到图元)
 	static bool CreateDrillSite(const AcGePoint3d& pt, DrillSiteLink& ds_link, CoalSurfaceLink& cs_link);
