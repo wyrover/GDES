@@ -30,6 +30,7 @@
 #include "../DefGE/FlowSensorGE.h"
 #include "../DefGE/DifferPressSensorGE.h"
 #include "../DefGE/GasSensorGE.h"
+#include "../DefGE/COSensorGE.h"
 //#include "../vno/vno.h"
 //#include "../GraphTool/DfsNetWork.h"
 
@@ -948,6 +949,27 @@ void DrawCmd::DrawFlowSensor()
 	if( !ArxUtilHelper::PostToModelSpace( pFlowSensorGE ) ) delete pFlowSensorGE;
 }
 
+
+
+void DrawCmd::DrawCOSensor( void )
+{
+	AcGePoint3d pt;
+	double angle;
+	AcDbObjectId objId;
+	CString GEName = _T("CO传感器");
+	DrawSensor(objId,GEName,pt,angle);
+
+	COSensorGE* pCOSensorGE = new COSensorGE( pt, angle );
+	// 关联到瓦斯管路上
+	pCOSensorGE->setRelatedGE( objId );
+
+	CheakLayerExit( GEName, 3,AcDb::kLnWt025 );
+	pCOSensorGE->setLayer(GEName);
+	pCOSensorGE->setLineWeight(AcDb::kLnWt025);
+
+	// 初始化并提交到数据库
+	if( !ArxUtilHelper::PostToModelSpace( pCOSensorGE ) ) delete pCOSensorGE;
+}
 void DrawCmd::DrawDifferPressSensor()
 {
 	//AcDbObjectId objId = ArxUtilHelper::SelectObject( _T( "请选择一条管路:" ) );

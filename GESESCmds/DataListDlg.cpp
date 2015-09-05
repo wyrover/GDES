@@ -65,42 +65,6 @@ static void GetAllRegTypes( AcStringArray& types )
     DrawHelper::GetAllRegGETypesForDraw( types );
 }
 
-static void GetTypeDxfNames( const AcStringArray& types, AcStringArray& dxfNames )
-{
-    int len = types.length();
-    for( int i = 0; i < len; i++ )
-    {
-        AcRxClass* pClass = AcRxClass::cast( acrxClassDictionary->at( types[i].kACharPtr() ) );
-        if( pClass != 0 )
-        {
-            dxfNames.append( pClass->dxfName() );
-        }
-    }
-}
-
-static void FillTypeList( AcStringArray& types, CComboBox& m_list )
-{
-    GetAllRegTypes( types );
-
-    AcStringArray dxfNames;
-    GetTypeDxfNames( types, dxfNames );
-
-    assert( types.length() == dxfNames.length() );
-
-    int len = dxfNames.length();
-    for( int i = 0; i < len; i++ )
-    {
-        m_list.AddString( dxfNames[i].kACharPtr() );
-    }
-
-	LPCTSTR lpszmyString = _T("瓦斯抽采管路");
-
-	// Delete all items that begin with the specified string. 
-	int nItem = 0;
-	nItem = m_list.FindString(nItem, lpszmyString);
-	m_list.SetCurSel(nItem);
-}
-
 static void ClearList( CListCtrl& m_list )
 {
     //首先删除所有行
@@ -251,26 +215,25 @@ static void ZoomToEntity( const AcDbObjectId& objId )
     acDocManager->sendStringToExecute( curDoc(), cmd, true, false, false );
 }
 
-IMPLEMENT_DYNAMIC( DataListDlg, DockBarChildDlg )
+IMPLEMENT_DYNAMIC( DataListDlg, AcadDialog )
 
-DataListDlg::DataListDlg( CWnd* pParent /*=NULL*/ )
-    : DockBarChildDlg( DataListDlg::IDD, pParent )
+
+DataListDlg::DataListDlg( CWnd* pParent, BOOL bModal )
+	: AcadDialog( DataListDlg::IDD, pParent, bModal )
 {
 
 }
-
 DataListDlg::~DataListDlg()
 {
 }
 
 void DataListDlg::DoDataExchange( CDataExchange* pDX )
 {
-    DockBarChildDlg::DoDataExchange( pDX );
-    DDX_Control( pDX, IDC_TYPE_LIST, m_typeList );
+    AcadDialog::DoDataExchange( pDX );
     DDX_Control( pDX, IDC_DATA_LIST, m_geList );
 }
 
-BEGIN_MESSAGE_MAP( DataListDlg, DockBarChildDlg )
+BEGIN_MESSAGE_MAP( DataListDlg, AcadDialog )
     //{{AFX_MSG_MAP(DataListDlg)
     //}}AFX_MSG_MAP
 
@@ -278,34 +241,19 @@ BEGIN_MESSAGE_MAP( DataListDlg, DockBarChildDlg )
     //ON_BN_CLICKED(IDC_GE_LIST_READ_TYPE_BTN, &DataListDlg::OnBnClickedGeListReadTypeBtn)
     ON_NOTIFY( LVN_ITEMCHANGED, IDC_DATA_LIST, &DataListDlg::OnLvnItemchangedGeList )
     ON_NOTIFY( LVN_COLUMNCLICK, IDC_DATA_LIST, &DataListDlg::OnLvnColumnclickGeList )
+	ON_BN_CLICKED(IDC_EXIT_BTN, &DataListDlg::OnBnClickedExitBtn)
 END_MESSAGE_MAP()
 
 BOOL DataListDlg::OnInitDialog()
 {
-    DockBarChildDlg::OnInitDialog();
+    AcadDialog::OnInitDialog();
 
     m_geList.SetExtendedStyle( m_geList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES );
 
-    m_types.removeAll();
-    m_typeList.ResetContent();
-
-    FillTypeList( m_types, m_typeList );
-
+	UpdateData();
     return TRUE;
 }
 
-void DataListDlg::OnClosing()
-{
-    //m_types.removeAll();
-    //m_typeList.ResetContent();
-
-    ClearItemData( m_geList );
-    // 清空链表
-    ClearList( m_geList );
-
-	sObjId = AcDbObjectId::kNull;
-	tObjId = AcDbObjectId::kNull;
-}
 
 //void DataListDlg::OnBnClickedGeListReadTypeBtn()
 //{
@@ -322,43 +270,41 @@ static void GetGasTunnelFields(AcStringArray& fields)
 	fields.append(_T("总局部阻力"));
 }
 
-void DataListDlg::OnBnClickedUpdateBtn()
+void DataListDlg::UpdateData()
 {
-    // 删除所有的数据(item data)
-    ClearItemData( m_geList );
+	// 删除所有的数据(item data)
+	ClearItemData( m_geList );
 
-    // 清空链表
-    ClearList( m_geList );
+	// 清空链表
+	ClearList( m_geList );
 
-	int indx = m_typeList.GetCurSel();
-	if(CB_ERR == indx)
-	{
-		AfxMessageBox(_T("没有选择图元类型"));
-		return;
-	}
-    // 获取类型
-    CString type = m_types[indx].kACharPtr();
+	//CString type = _T("瓦斯抽采管路");
 
-    acDocManager->lockDocument( curDoc() );
+	acDocManager->lockDocument( curDoc() );
 
-    AcStringArray fields;
+	AcStringArray fields;
 	//设置瓦斯管路路径的column名称
 	GetGasTunnelFields(fields);
 	// 获取所有的字段
-    //FieldHelper::GetAllFields( type, fields );
+	//FieldHelper::GetAllFields( type, fields );
 
-    // 构建Column
-    BuildHeadColumns( m_geList, fields );
+	// 构建Column
+	BuildHeadColumns( m_geList, fields );
 
-    m_initFinished = false;
+	m_initFinished = false;
 
-    // 填充数据
+	// 填充数据
 	FillDatas(m_geList, sObjId, tObjId);
 
-    // 数据初始化完毕
-    m_initFinished = true;
+	// 数据初始化完毕
+	m_initFinished = true;
 
-    acDocManager->unlockDocument( curDoc() );
+	acDocManager->unlockDocument( curDoc() );
+}
+
+void DataListDlg::OnBnClickedUpdateBtn()
+{
+	UpdateData();
 }
 
 //#include "../MineGE/LinkedGE.h"
@@ -416,4 +362,9 @@ void DataListDlg::OnLvnColumnclickGeList( NMHDR* pNMHDR, LRESULT* pResult )
     m_geList.SortItems( SortFunc, ( LPARAM )&sd ); // 排序
 
     *pResult = 0;
+}
+
+void DataListDlg::OnBnClickedExitBtn()
+{
+	AcadDialog::OnCancel();
 }

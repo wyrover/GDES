@@ -205,6 +205,16 @@ void ReportHelper::OpenCHMFile2()
 	filePath = BuildPath( GetAppPathDir(), fileName );
 	OpenWordDocument(filePath);
 }
+
+//帮助文档，说明书
+void ReportHelper::OpenHelpCHMFile()
+{
+	CString fileName,filePath;
+	fileName = _T("\\help\\doc.chm");
+	filePath = BuildPath( GetAppPathDir(), fileName );
+	OpenWordDocument(filePath);
+}
+
 void ReportHelper::CreatBaseReport()
 {
 	CAcModuleResourceOverride myResources;
@@ -296,16 +306,4 @@ void ReportHelper::ShowReleatedInfoDlg()
 	bookMks.append(_T("ReleatInfo_YesOrNo"));
 	dlg.setBookMarks(bookMks);
 	dlg.DoModal();
-}
-
-void ReportHelper::CreatRCUReport()
-{
-	CAcModuleResourceOverride myResources;
-
-	TCHAR szFileFilter[] = _T("doc文档(*.doc)|*.doc||");
-	TCHAR szFileExt[] = _T("doc");
-	CString defaultPath;
-	GetDocPath(defaultPath);
-	CString outName = _T("石门设计报告");
-	SaveAndOpenReport(outName);
 }

@@ -68,6 +68,9 @@ public:
 	//瓦斯传感器
 	static void DrawGasSensor( void );
 
+	//CO传感器
+	static void DrawCOSensor(void);
+
 	static void DrawChimney(void);
 	//static void DrawCompass();
 

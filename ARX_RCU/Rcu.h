@@ -45,22 +45,22 @@ public:
 		beta = this->beta;
 		h = this->h;
 	}
-	//设置石门巷道断面参数
+	//设置钻场巷道断面参数
 	void setTunnelParams(double H, double W1, double W2)
 	{
 		this->H = H;
 		this->W1 = W1;
 		this->W2 = W2;
 	}
-	//获取石门巷道断面参数
+	//获取钻场巷道断面参数
 	void getTunnelParams(double& H, double& W1, double& W2) const
 	{
 		H = this->H;
 		W1 = this->W1;
 		W2 = this->W2;
 	}
-	//设置石门参数
-	void setRockGateParams(double S1,double f1, double f2, double d1, double d2)
+	//设置钻场参数
+	void setDrillSiteParams(double S1,double f1, double f2, double d1, double d2)
 	{
 		this->S1 = S1;
 		this->f1 = f1;
@@ -68,15 +68,15 @@ public:
 		this->d1 = d1;
 		this->d2 = d2;
 	}
-	//获取石门参数
-	void getRockGateParams(double& f1, double& f2, double& d1, double& d2) const
+	//获取钻场参数
+	void getDrillSiteParams(double& f1, double& f2, double& d1, double& d2) const
 	{
 		f1 = this->f1;
 		f2 = this->f2;
 		d1 = this->d1;
 		d2 = this->d2;
 	}
-	//最小法距点坐标
+	//垂距点坐标
 	AcGePoint3d minNormalDistPoint() const
 	{
 		return origin + AcGeVector3d(W1*0.5, H, 0);
@@ -136,14 +136,14 @@ public:
 	}
 
 private:
-	//最小法距
+	//垂距
 	double minNormalDist() const
 	{
 		using namespace std;
-		//沿着F点(最小法距点向煤层做垂线)
+		//沿着F点(垂距点向煤层做垂线)
 		return S1*sin(beta);
 	}
-	//如果只考虑石门水平，则delta等于alpha(煤层倾角)
+	//如果只考虑钻场水平，则delta等于alpha(煤层倾角)
 	double getDelta() const
 	{
 		return this->alpha;
@@ -219,22 +219,22 @@ private:
 	}
 
 private:
-	AcGePoint3d origin; // 石门巷道断面下部中心点的坐标
+	AcGePoint3d origin; // 钻场巷道断面下部中心点的坐标
 
 	double alpha; // 煤层倾角
-	double beta; // 石门轴线与煤层走向的夹角
+	double beta; // 钻场轴线与煤层走向的夹角
 	double h;    // 煤层厚度
 
-	double H;    // 石门巷道高度
-	double W1, W2; // 石门巷道宽度(W1、W2为梯形巷道上、下底，非梯形巷道时W1 = W2表示巷道宽)
+	double H;    // 钻场巷道高度
+	double W1, W2; // 钻场巷道宽度(W1、W2为梯形巷道上、下底，非梯形巷道时W1 = W2表示巷道宽)
 	
-	double S1; // 石门轴线距煤层距离
+	double S1; // 钻场轴线距煤层距离
 	double f1; // 石门揭煤轮廓外上控距离
 	double f2; // 石门揭煤轮廓外下控距离
 	double d1; // 石门揭煤轮廓外左控距离
 	double d2; // 石门揭煤轮廓外右控距离
 
-	double w1, w2; // 石门迎头钻孔左右边距
+	double w1, w2; // 钻场迎头钻孔左右边距
 	double h1, h2; // 钻机的最小最大工作高度
 	double d0;     // 钻孔卸压直径
 };

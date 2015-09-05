@@ -6,9 +6,9 @@ class ARX_REPORTHELPER_DLLIMPEXP ReportHelper
 public:
 	static void CreatReportHelper();
 	static void CreatBaseReport();
-	static void CreatRCUReport();
 	static void OpenCHMFile();
 	static void OpenCHMFile2();
+	static void OpenHelpCHMFile();
 	static void ListShow();
 	static void ShowGasPlanDlg();
 	static void ShowEPCMFDDlg();

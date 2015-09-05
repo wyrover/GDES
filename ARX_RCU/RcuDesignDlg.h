@@ -1,18 +1,20 @@
 #pragma once
 
-#include "DockBarChildDlg.h"
+#include "Resource.h"
+#include "AcadDialog.h"
+//#include "DockBarChildDlg.h"
 /**
 	CButtonST使用简介
 	http://www.cnblogs.com/lidabo/archive/2012/12/17/2821122.html
 */
 
 //石门揭煤设计主对话框
-class RcuDesignDlg : public DockBarChildDlg
+class RcuDesignDlg : public AcadDialog
 {
 	DECLARE_DYNAMIC(RcuDesignDlg)
 
 public:
-	RcuDesignDlg(CWnd* pParent = NULL);   // 标准构造函数
+	RcuDesignDlg(CWnd* pParent = NULL, BOOL bModal = FALSE);
 	virtual ~RcuDesignDlg();
 
 // 对话框数据
@@ -23,42 +25,26 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	//石门列表
-	CListCtrl m_list;
 	//钻场列表
-	CListCtrl m_list2;
-
+	CListCtrl m_list;
+	BOOL m_allPut;
 	//导出按钮单击消息
 	afx_msg void OnBnClickedExport();
 
-	//石门列表行切换时触发的消息
-	afx_msg void OnLvnItemchangedList1(NMHDR *pNMHDR, LRESULT *pResult);
-	//石门列表双击消息
-	afx_msg void OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult);
-	//石门列表右键消息
-	afx_msg void OnNMRclickList1(NMHDR *pNMHDR, LRESULT *pResult);
 	//钻场列表双击消息
-	afx_msg void OnNMDblclkList2(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult);
 	//钻场列表右键消息
-	afx_msg void OnNMRclickList2(NMHDR *pNMHDR, LRESULT *pResult);
-
-	//石门列表右键菜单项消息响应
-	afx_msg void OnAddRockGateCommand();
-	afx_msg void OnDeleteRockGateCommand();
-	afx_msg void OnModifyRockGateCommand();
-	afx_msg void OnHilightRockGateCommand();
-	afx_msg void OnUpdateRockGateListCommand();
-	afx_msg void OnHilightCoalSurfCommand();
-	afx_msg void OnDisplayCoalSurfCommand();
-	afx_msg void OnDesiginClosePoresCommand();
+	afx_msg void OnNMRclickList1(NMHDR *pNMHDR, LRESULT *pResult);
 
 	//钻场列表右键菜单项消息响应
 	afx_msg void OnAddDrillSiteCommand();
 	afx_msg void OnDeleteDrillSiteCommand();
 	afx_msg void OnModifyDrillSiteCommand();
 	afx_msg void OnHilightDrillSiteCommand();
-	afx_msg void OnDesiginOpenPoresCommand();
-	afx_msg void OnClearOpenPoresCommand();
+	afx_msg void OnUpdateDrillSiteListCommand();
+	afx_msg void OnHilightCoalSurfCommand();
+	afx_msg void OnDisplayCoalSurfCommand();
+	afx_msg void OnDesiginClosePoresCommand();
 
 	//响应MyMsg.h中自定义消息
 	afx_msg LRESULT OnRcuAddMessage(WPARAM wParam, LPARAM lParam);
@@ -72,24 +58,15 @@ public:
 
 	//下面的这些函数仅提供给自定义消息映射函数使用
 private:
-	//根据用户指定的操作更新石门列表
-	void updateRockGateListCtrl(unsigned int op, const AcDbObjectId& rock_gate);
 	//根据用户指定的操作更新钻场列表
 	void updateDrillSiteListCtrl(unsigned int op, const AcDbObjectId& drill_site);
 	
-	//增加石门
-	void addRockGate(const AcDbObjectId& rock_gate);
-	//删除石门
-	void delRockGate(int row1);
-	//修改石门
-	void modifyRockGate(int row1);
-
 	//增加钻场
 	void addDrillSite(const AcDbObjectId& drill_site);
 	//删除钻场
-	void delDrillSite(int row2);
+	void delDrillSite(int row1);
 	//修改钻场
-	void modifyDrillSite(int row2);
+	void modifyDrillSite(int row1);
 
 	//更新对话框
 	void updateUI();

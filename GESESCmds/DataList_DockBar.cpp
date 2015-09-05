@@ -124,7 +124,7 @@ bool DataList_DockBar::OnClosing()
     //MessageBox(_T("调用AirSetDockBar::OnClosing()"));
 
     /* 手动添加 */
-    mChildDlg.OnClosing();
+   // mChildDlg.OnClosing();
 
     return ret;
 }

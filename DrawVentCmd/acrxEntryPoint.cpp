@@ -238,6 +238,12 @@ public:
 		DrawCmd::DrawGasSensor();
 	}
 
+	//»æÖÆCO´«¸ÐÆ÷
+	static void JL_DrawCOSensor(void)
+	{
+		DrawCmd::DrawCOSensor();
+	}
+
     static void JL_ReverseDirection( void )
     {
         DrawCmd::ReverseDirection();
@@ -351,5 +357,6 @@ ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawDetermineHole, DrawDetermi
 ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawDrill, DrawDrill, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawTempeSensor, DrawTempeSensor, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawFlowSensor, DrawFlowSensor, ACRX_CMD_TRANSPARENT, NULL )
+ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawCOSensor, DrawCOSensor, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawDifferPressSensor, DrawDifferPressSensor, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CDrawVentCmdApp, JL, _DrawGasSensor, DrawGasSensor, ACRX_CMD_TRANSPARENT, NULL )

@@ -10,4 +10,4 @@
 #include "ArxUtilHelper.h"
 #include "ArxDwgHelper.h"
 #include "LayerHelper.h"
-#include "LogHelper.h"
+//#include "LogHelper.h"

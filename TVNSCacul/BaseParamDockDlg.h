@@ -3,12 +3,15 @@
 #include "afxpropertygridctrl.h"
 #include "afxwin.h"
 #include "Resource.h"
-class BaseParamDockDlg : public CAcUiDialog
+
+#include "AcadDialog.h"
+
+class BaseParamDockDlg : public AcadDialog
 {
 	DECLARE_DYNAMIC(BaseParamDockDlg)
 
 public:
-	BaseParamDockDlg(CWnd* pParent = NULL);   // 标准构造函数
+	BaseParamDockDlg(CWnd* pParent = NULL, BOOL bModal = FALSE);   // 标准构造函数
 	virtual ~BaseParamDockDlg();
 
 	afx_msg LRESULT OnPropertyChanged(WPARAM,LPARAM);

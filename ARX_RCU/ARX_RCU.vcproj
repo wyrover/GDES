@@ -453,14 +453,6 @@
 					RelativePath=".\RcuEditDrillSiteDlg.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\RcuEditOpenPoreDlg.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\RcuEditRockGateDlg.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="reactor"
@@ -471,6 +463,34 @@
 				</File>
 				<File
 					RelativePath=".\ReactorHelper.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="report"
+				>
+				<File
+					RelativePath=".\CmyWord.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CreatReport.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\msword.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="test"
+				>
+				<File
+					RelativePath=".\AcadDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TestDialog.cpp"
 					>
 				</File>
 			</Filter>
@@ -542,14 +562,6 @@
 					RelativePath=".\RcuEditDrillSiteDlg.h"
 					>
 				</File>
-				<File
-					RelativePath=".\RcuEditOpenPoreDlg.h"
-					>
-				</File>
-				<File
-					RelativePath=".\RcuEditRockGateDlg.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="reactor"
@@ -563,6 +575,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="report"
+				>
+				<File
+					RelativePath=".\CmyWord.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CreatReport.h"
+					>
+				</File>
+				<File
+					RelativePath=".\msword.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="test"
+				>
+				<File
+					RelativePath=".\AcadDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TestDialog.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -570,6 +610,10 @@
 			>
 			<File
 				RelativePath=".\ARX_RCU.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\icon.cur"
 				>
 			</File>
 			<File

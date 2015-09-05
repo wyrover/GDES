@@ -71,18 +71,20 @@ void UIHelper::ShowBaseParamDlg()
 
 	//AcDbObjectId baseParamObjId;
 	//if(!SingleDataObjectHelper::GetObjectId(_T("矿井信息"),baseParamObjId)) return;
-	CMDIFrameWnd* pAcadFrame = acedGetAcadFrame();
+	//CMDIFrameWnd* pAcadFrame = acedGetAcadFrame();
 
-	if( pBaseParamDockBar == 0 )
-	{
-		pBaseParamDockBar = new BaseParam_DockBar();
-		pBaseParamDockBar->Create ( pAcadFrame, _T( "计算参数输入" ) ) ;
-		pBaseParamDockBar->EnableDocking ( CBRS_ALIGN_ANY ) ;
-		pBaseParamDockBar->RestoreControlBar () ;
-	}
-	//pWindStationDockBar->RestoreControlBar();
-	pBaseParamDockBar->update();
-	pAcadFrame->ShowControlBar( pBaseParamDockBar, TRUE, FALSE );
+	//if( pBaseParamDockBar == 0 )
+	//{
+	//	pBaseParamDockBar = new BaseParam_DockBar();
+	//	pBaseParamDockBar->Create ( pAcadFrame, _T( "计算参数输入" ) ) ;
+	//	pBaseParamDockBar->EnableDocking ( CBRS_ALIGN_ANY ) ;
+	//	pBaseParamDockBar->RestoreControlBar () ;
+	//}
+	////pWindStationDockBar->RestoreControlBar();
+	//pBaseParamDockBar->update();
+	//pAcadFrame->ShowControlBar( pBaseParamDockBar, TRUE, FALSE );
+	BaseParamDockDlg *dlg = new BaseParamDockDlg(acedGetAcadFrame(),TRUE);
+	dlg->Run();
 }
 
 void UIHelper::DestroyBaseParamDockBar()

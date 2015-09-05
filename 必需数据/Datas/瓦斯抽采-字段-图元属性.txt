@@ -12,8 +12,9 @@
 							
 管路阻力	GasTube	管路编号	DT_STRING	""	0	1	管路编号
 管路阻力	GasTube	管路长度	DT_NUMERIC	0-9999999999	2	1	单位：m
-管路阻力	GasTube	瓦斯管中的瓦斯流量	DT_NUMERIC	0-9999999999	2	1	单位：m3/min
-管路阻力	GasTube	瓦斯管内径	DT_NUMERIC	0-9999999999	2	1	单位：mm
+管路阻力	GasTube	瓦斯管中的瓦斯流量	DT_NUMERIC	0-9999999999	2	1	单位：m3/min(可输入'瓦斯管内径'和'瓦斯管中瓦斯平均流速'之后双击计算)
+管路阻力	GasTube	瓦斯管内径	DT_NUMERIC	0-9999999999	2	1	单位：mm(可输入'瓦斯管中的瓦斯流量'和'瓦斯管中瓦斯平均流速'之后双击计算)
+管路阻力	GasTube	瓦斯管中瓦斯平均流速	DT_NUMERIC	0-9999999999	2	1	单位：m/min(合理流速为5-15m/min之间,可输入'瓦斯管内径'和'瓦斯管中的瓦斯流量'之后双击计算)
 管路阻力	GasTube	管道内气体的绝对压力	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 管路阻力	GasTube	管路温度	DT_NUMERIC	0-9999999999	2	1	单位：摄氏度
 管路阻力	GasTube	局部阻力百分比	DT_INT	10-20	0	1	单位：%
@@ -23,13 +24,13 @@
 管路阻力	GasTube	混合瓦斯对空气的相对密度	DT_NUMERIC	0-9999999999	3	0	通过读取数据库得到
 管路阻力	GasTube	系数	DT_NUMERIC	0-9999999999	2	0	管路阻力系数(无需输入，计算所得)
 							
-管径及流速	GasTube	瓦斯管中的瓦斯流量	DT_NUMERIC	0-9999999999	2	1	单位：m3/min
-管径及流速	GasTube	瓦斯管中瓦斯平均流速	DT_NUMERIC	0-9999999999	2	1	单位：m/min(合理流速为5-15m/min之间)
-管径及流速	GasTube	瓦斯管内径	DT_NUMERIC	0-9999999999	2	1	单位：mm
+管径及流速	GasTube	瓦斯管中的瓦斯流量	DT_NUMERIC	0-9999999999	2	1	单位：m3/min(可输入'瓦斯管内径'和'瓦斯管中瓦斯平均流速'之后双击计算)
+管径及流速	GasTube	瓦斯管中瓦斯平均流速	DT_NUMERIC	0-9999999999	2	1	单位：m/min(合理流速为5-15m/min之间,可输入'瓦斯管内径'和'瓦斯管中的瓦斯流量'之后双击计算)
+管径及流速	GasTube	瓦斯管内径	DT_NUMERIC	0-9999999999	2	1	单位：mm(可输入'瓦斯管中的瓦斯流量'和'瓦斯管中瓦斯平均流速'之后双击计算)
 							
 相关压力	GasTube	巷道绝对大气压	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 相关压力	GasTube	管道内气体的绝对压力	DT_NUMERIC	0-9999999999	2	1	单位：Pa
-相关压力	GasTube	管路压差	DT_NUMERIC	0-9999999999	2	1	单位：Pa(巷道绝对大气压与管道绝对压力之差)
+相关压力	GasTube	管路压差	DT_NUMERIC	0-9999999999	2	1	单位：Pa(巷道绝对大气压与管道绝对压力之差输入之后双击)
 							
 管路计算	GasTube	管路编号	DT_STRING	""	0	1	管路编号
 管路计算	GasTube	管路长度	DT_NUMERIC	0-9999999999	2	1	单位：m
@@ -39,9 +40,9 @@
 管路计算	GasTube	管路温度	DT_NUMERIC	0-9999999999	2	1	单位：摄氏度
 管路计算	GasTube	局部阻力百分比	DT_INT	10-20	0	1	单位：%
 管路计算	GasTube	管道中的瓦斯浓度	DT_NUMERIC	0-9999999999	2	1	单位：%
-管路计算	GasTube	瓦斯管中的瓦斯流量	DT_NUMERIC	0-9999999999	2	1	单位：m3/min
-管路计算	GasTube	瓦斯管中瓦斯平均流速	DT_NUMERIC	0-9999999999	2	1	单位：m/min(合理流速为5-15m/min之间)
-管路计算	GasTube	瓦斯管内径	DT_NUMERIC	0-9999999999	2	1	单位：mm
+管路计算	GasTube	瓦斯管中的瓦斯流量	DT_NUMERIC	0-9999999999	2	1	单位：m3/min(可输入'瓦斯管内径'和'瓦斯管中瓦斯平均流速'之后双击计算)
+管路计算	GasTube	瓦斯管中瓦斯平均流速	DT_NUMERIC	0-9999999999	2	1	单位：m/min(合理流速为5-15m/min之间,可输入'瓦斯管内径'和'瓦斯管中的瓦斯流量'之后双击计算)
+管路计算	GasTube	瓦斯管内径	DT_NUMERIC	0-9999999999	2	1	单位：mm(可输入'瓦斯管中的瓦斯流量'和'瓦斯管中瓦斯平均流速'之后双击计算)
 管路计算	GasTube	管路的摩擦阻力	DT_NUMERIC	0-9999999999	2	0	单位：Pa
 管路计算	GasTube	管路的局部阻力	DT_NUMERIC	0-9999999999	2	1	单位：Pa(根据计算的摩擦阻力计算所得)
 管路计算	GasTube	混合瓦斯对空气的相对密度	DT_NUMERIC	0-9999999999	3	0	通过读取数据库得到
@@ -129,9 +130,10 @@
 							
 瓦斯泵的流量计算	GasPumpGE	瓦斯抽采总量（纯量）	DT_NUMERIC	0-9999999999	2	1	单位：m3/min
 瓦斯泵的流量计算	GasPumpGE	瓦斯抽采浓度	DT_NUMERIC	0-99	2	1	单位：%
-瓦斯泵的流量计算	GasPumpGE	瓦斯泵流量备用系数	DT_NUMERIC	0-9999999999	2	1	瓦斯泵流量备用系数
+瓦斯泵的流量计算	GasPumpGE	瓦斯泵流量备用系数	DT_NUMERIC	0-9999999999	2	1	建议取2.0
 瓦斯泵的流量计算	GasPumpGE	瓦斯泵的机械效率	DT_NUMERIC	0-9999999999	2	1	一般取0.8
 瓦斯泵的流量计算	GasPumpGE	瓦斯泵的额定流量	DT_NUMERIC	0-9999999999	2	0	单位：m3/min
+瓦斯泵的流量计算	GasPumpGE	当地大气压	DT_NUMERIC	0-9999999999	2	1	标准大气压为101325Pa
 							
 瓦斯泵的压力计算	GasPumpGE	正压管路的摩擦阻力损失	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 瓦斯泵的压力计算	GasPumpGE	正压管路的局部阻力损失	DT_NUMERIC	0-9999999999	2	1	单位：Pa
@@ -147,12 +149,13 @@
 							
 瓦斯泵计算	GasPumpGE	瓦斯抽采总量（纯量）	DT_NUMERIC	0-9999999999	2	1	单位：m3/min
 瓦斯泵计算	GasPumpGE	瓦斯抽采浓度	DT_NUMERIC	0-99	2	1	单位：%
-瓦斯泵计算	GasPumpGE	瓦斯泵流量备用系数	DT_NUMERIC	0-9999999999	2	1	瓦斯泵流量备用系数
+瓦斯泵计算	GasPumpGE	瓦斯泵流量备用系数	DT_NUMERIC	0-9999999999	2	1	建议取2.0
 瓦斯泵计算	GasPumpGE	瓦斯泵的机械效率	DT_NUMERIC	0-9999999999	2	1	一般取0.8
 瓦斯泵计算	GasPumpGE	正压管路的摩擦阻力损失	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 瓦斯泵计算	GasPumpGE	正压管路的局部阻力损失	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 瓦斯泵计算	GasPumpGE	用户所需正压	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 瓦斯泵计算	GasPumpGE	抽采钻孔负压	DT_NUMERIC	0-9999999999	2	1	单位：Pa
+瓦斯泵计算	GasPumpGE	当地大气压	DT_NUMERIC	0-9999999999	2	1	标准大气压为101325Pa
 瓦斯泵计算	GasPumpGE	负压管路的摩擦阻力损失	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 瓦斯泵计算	GasPumpGE	负压的局部阻力损失	DT_NUMERIC	0-9999999999	2	1	单位：Pa
 瓦斯泵计算	GasPumpGE	备用系数	DT_NUMERIC	0-9999999999	2	1	一般取1.2

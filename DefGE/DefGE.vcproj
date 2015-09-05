@@ -504,6 +504,10 @@
 				Name="Sensor"
 				>
 				<File
+					RelativePath=".\COSensorGE.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\DifferPressSensorGE.cpp"
 					>
 				</File>
@@ -537,10 +541,6 @@
 				</File>
 				<File
 					RelativePath=".\RcuGE.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\RockGate.cpp"
 					>
 				</File>
 			</Filter>
@@ -645,6 +645,10 @@
 				Name="Sensor"
 				>
 				<File
+					RelativePath=".\COSensorGE.h"
+					>
+				</File>
+				<File
 					RelativePath=".\DifferPressSensorGE.h"
 					>
 				</File>
@@ -678,10 +682,6 @@
 				</File>
 				<File
 					RelativePath=".\RcuGE.h"
-					>
-				</File>
-				<File
-					RelativePath=".\RockGate.h"
 					>
 				</File>
 			</Filter>

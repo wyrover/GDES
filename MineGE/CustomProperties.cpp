@@ -76,6 +76,26 @@ void CustomGridProperty::OnDrawValue(CDC* pDC, CRect rect)
 	}
 }
 
+static void ChangeDatas(CMFCPropertyGridCtrl* propertyDataList,CustomGridProperty* pProp, COleVariant& changedValue)
+{
+	int groupCount = propertyDataList->GetPropertyCount();
+	for( int i = 0; i < groupCount; i++)
+	{
+		CMFCPropertyGridProperty* pGroup = propertyDataList->GetProperty(i);
+		int propCount = pGroup->GetSubItemsCount();
+		//查找所有具有相同名字的字段，并且把值修改了
+		for( int j = 0; j < propCount; j++ )
+		{
+			CMFCPropertyGridProperty* pPro = pGroup->GetSubItem(j);
+			CString changedName = pPro->GetName();
+			CString changeName = pProp->GetName();
+			if (changedName == changeName && pPro != pProp)
+			{
+				pPro->SetValue(changedValue);
+			}
+		}
+	}
+}
 BOOL CustomGridProperty::OnDblClk(CPoint point)
 {
 	ASSERT_VALID(m_pWndList);
@@ -88,6 +108,7 @@ BOOL CustomGridProperty::OnDblClk(CPoint point)
 		{
 			COleVariant v(m_fn->caculate());
 			this->SetValue(v);
+			ChangeDatas(m_pWndList,this,v);
 			m_pWndList->InvalidateRect(m_valueRect);
 		}
 	}
