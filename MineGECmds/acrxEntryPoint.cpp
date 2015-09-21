@@ -113,7 +113,7 @@ public:
 
 	static void JL_RemnantGas()
 	{
-		CString funcName = _T("通过瓦斯抽采率计算");
+		CString funcName = _T("通过瓦斯抽采量计算");
 		UIHelper::DisplayDataByFuncName(funcName);
 	}
 

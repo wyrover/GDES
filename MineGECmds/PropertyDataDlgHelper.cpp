@@ -206,7 +206,7 @@ void PropertyDataDlgHelper::InputPropertyDataDlg( const AcDbObjectId& objId, con
 	//	ValueHelper::setGasAirValue(objId);
 	//}
 
-	//if(_T("通过瓦斯抽采率计算") == func || _T("通过残余瓦斯压力反算") == func)
+	//if(_T("通过瓦斯抽采量计算") == func || _T("通过残余瓦斯压力反算") == func)
 	//{
 	//	WcyPropertyDlg pdd(NULL,func);
 	//	pdd.showAllData( true );

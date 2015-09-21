@@ -539,7 +539,7 @@ bool PropertyDataDlg::caculate()
 	}
 
 	
-	if (0 == m_func.CompareNoCase(_T("通过瓦斯抽采率计算")))
+	if (0 == m_func.CompareNoCase(_T("通过瓦斯抽采量计算")))
 	{
 		return cacul.remnantGasByQCacul();
 	}

@@ -48,7 +48,7 @@ public:
 
 	//残余瓦斯含量
 	double remnantGas;				//残余瓦斯含量
-	//通过瓦斯抽采计算 
+	//通过瓦斯抽采量计算 
 	double oldgasContent;			//原始瓦斯含量
 	double drainGasAmo;				//评价单元钻孔抽放瓦斯总量
 	//通过残余瓦斯含量计算 
