@@ -455,6 +455,36 @@ static bool wordOprate(CString savePath)
 	return ret;
 }
 
+//打开pdf文件(调用自带的pdf.exe,和arx程序打包在一起)
+static bool OpenPdf( const CString& pdfExePath, const CString& cwdPath, const CString& pdfFile )
+{
+	bool hidden = false;
+
+	PROCESS_INFORMATION pi;
+	STARTUPINFO si;
+	memset( &si, 0, sizeof( si ) );
+	si.cb = sizeof( si );
+	si.wShowWindow = hidden ? SW_HIDE : SW_SHOW;
+	si.dwFlags = STARTF_USESHOWWINDOW;
+
+	CString cmdLine;
+	cmdLine.Format( _T( " %s" ), pdfFile );
+
+	BOOL ret = CreateProcess( ( LPCTSTR )pdfExePath, ( LPTSTR )( LPCTSTR )cmdLine, NULL, FALSE, NULL, NULL, NULL, ( LPCTSTR )cwdPath, &si, &pi );
+	if( ret )
+	{
+		//WaitForSingleObject(pi.hProcess, INFINITE);
+		//CloseHandle(pi.hThread);
+		//CloseHandle(pi.hProcess);
+
+		//HANDLE& hProcess, HANDLE& hThread
+		// 返回进程和线程句柄
+		//hProcess = pi.hProcess;
+		//hThread = pi.hThread;
+	}
+	return ( ret == TRUE );
+}
+
 bool initword()
 {
 	//CoInitialize返回的是HResult类型的值
@@ -504,7 +534,14 @@ void OpenDoc(const CString& docPath,BOOL isVisiable)
 	SaveReport(docPath);
 }
 
-void OpenWordDocument( const CString& filePath )
+void OpenWordDocument( const CString& filePath ,bool isDoc)
 {
-	ShellExecute( NULL, _T( "open" ), filePath, NULL, NULL, SW_SHOWNORMAL );
+	if(isDoc)
+	{
+		ShellExecute( NULL, _T( "open" ), filePath, NULL, NULL, SW_SHOWNORMAL );
+	}
+	else
+	{
+		OpenPdf( _T( "pdf.exe" ), _T( "." ), filePath );
+	}
 }

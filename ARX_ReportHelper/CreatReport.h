@@ -22,7 +22,7 @@ extern bool CreatReport(const CString& savePath);
 
 extern void OpenDoc(const CString& docPath,BOOL isVisiable = FALSE);
 
-extern void OpenWordDocument( const CString& filePath );
+extern void OpenWordDocument( const CString& filePath ,bool isDoc = true);
 /**
 修改的地方：
 1、将wordOperate.cpp里的CmyWord MyWord改成CmyWord* MyWord;

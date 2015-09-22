@@ -190,29 +190,22 @@ void ReportHelper::CreatReportHelper()
 
 void ReportHelper::OpenCHMFile()
 {
-	CString fileName,filePath;
-	fileName = _T("\\help\\瓦斯抽采达标暂行规定.chm");
-	filePath = BuildPath( GetAppPathDir(), fileName );
-	//OpenWordDocument(_T("C:\\Users\\hd\\Desktop\\test\\瓦斯抽采达标暂行规定.chm"));
-	OpenWordDocument(filePath);
+	CString filePath = _T("help\\瓦斯抽采达标暂行规定.pdf");
+	OpenWordDocument(filePath,false);
 }
 
 //矿上自己的条例
 void ReportHelper::OpenCHMFile2()
 {
-	CString fileName,filePath;
-	fileName = _T("\\help\\瓦斯抽采达标评价工作体系(试行).chm");
-	filePath = BuildPath( GetAppPathDir(), fileName );
-	OpenWordDocument(filePath);
+	CString filePath = _T("help\\瓦斯抽采达标评价工作体系(试行).pdf");
+	OpenWordDocument(filePath,false);
 }
 
 //帮助文档，说明书
 void ReportHelper::OpenHelpCHMFile()
 {
-	CString fileName,filePath;
-	fileName = _T("\\help\\doc.chm");
-	filePath = BuildPath( GetAppPathDir(), fileName );
-	OpenWordDocument(filePath);
+	CString filePath = _T("help\\doc.pdf");
+	OpenWordDocument(filePath,false);
 }
 
 void ReportHelper::CreatBaseReport()
