@@ -302,11 +302,11 @@ static BOOL SetConclusionTable(CString txtName)
 	{
 		if(_ttoi(datas[yesOrNoIndx].kACharPtr()))
 		{
-			MyWord->WriteText(_T("¡Ì"));//¡Ì
+			MyWord->WriteText(_T("¡Ì"),wdAlignParagraphCenter);//¡Ì
 		}
 		else
 		{
-			MyWord->WriteText(_T("¡Á"));//¡Á
+			MyWord->WriteText(_T("¡Á"),wdAlignParagraphCenter);//¡Á
 		}
 
 	}
