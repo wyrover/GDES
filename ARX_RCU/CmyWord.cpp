@@ -395,7 +395,11 @@ void CmyWord::CloseApp()
 		AfxMessageBox(_T("获取Word 对象失败,关闭操作失败"));
 		return;
 	}
-	else
+	m_wdDocs = m_wdApp.GetDocuments();
+	short docNum = (short)m_wdDocs.GetCount();
+
+	//有word程序打开，但是没有打开文档，则关闭程序（防止word后台运行，影响计算机运行速度）
+	if(docNum <= 0) 
 	{
 		m_wdApp.Quit(vOpt,vOpt,vOpt);
 		m_wdRange.ReleaseDispatch();  

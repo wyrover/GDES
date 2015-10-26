@@ -55,14 +55,14 @@ BOOL CmyWord::isUsing(CString fileName)
 	IUnknown *pUnk = NULL;
 
 	HRESULT hr = ::GetActiveObject(clsid,NULL,&pUnk);
-	if(FAILED(hr)|| pUnk == NULL) return TRUE;
+	if(FAILED(hr)|| pUnk == NULL) return FALSE;
 	
 	hr = pUnk->QueryInterface(IID_IDispatch, (LPVOID *)&m_wdApp);
-	if(FAILED(hr)) return TRUE;
+	if(FAILED(hr)) return FALSE;
 
 	_Application wdApp;
 	hr = pUnk->QueryInterface(IID_IDispatch, (LPVOID *)&wdApp);
-	if(FAILED(hr)) return TRUE;
+	if(FAILED(hr)) return FALSE;
 
 
 	Documents wdDocs = wdApp.GetDocuments();
@@ -83,56 +83,17 @@ BOOL CmyWord::isUsing(CString fileName)
 		_Document  wdDoc;
 		wdDoc.AttachDispatch(wdDocs.Item(vIndex));
 
-		CString bstrName = wdDoc.GetFullName();
-		acutPrintf(_T("word名称:%s\n"),bstrName);
-		if(bstrName == fileName)
+		if(wdDoc != NULL)
 		{
-			return TRUE;
+			CString bstrName = wdDoc.GetFullName(); 
+			if(bstrName == fileName)
+			{
+				return TRUE;
+			}
 		}
 	}
 
-	//_Document  wdDoc;
-	//wdDoc = wdApp.GetActiveDocument(); 
-	//if(wdDoc != NULL)
-	//{
-	//	CString bstrName = wdDoc.GetFullName(); 
-	//	if(bstrName == fileName)
-	//	{
-	//		return TRUE;
-	//	}
-	//}
 	return FALSE;
-
-
-	//for (short i = 0; i < docNum; i++)
-	//{
-	//	COleVariant vIndex(i);
-
-	//	m_wdDoc.AttachDispatch(m_wdDocs.Item(vIndex));
-	//	//VARIANT vParam;
-	//	//vParam.vt = VT_I4;
-	//	//vParam.lVal = i;
-
-	//	CString bstrName = m_wdDoc.GetFullName();
-	//	acutPrintf(_T("word名称:%s\n"),bstrName);
-	//	if(bstrName == fileName)
-	//	{
-	//		return TRUE;
-	//	}
-	//}
-
-	////_Document  wdDoc;
-	////wdDoc = wdApp.GetActiveDocument(); 
-	////if(wdDoc != NULL)
-	////{
-	////	CString bstrName = wdDoc.GetFullName(); 
-	////	if(bstrName == fileName)
-	////	{
-	////		return TRUE;
-	////	}
-	////}
-	//return FALSE;
-
 }
 //操作  
 BOOL CmyWord::CreateApp()  
@@ -444,7 +405,12 @@ void CmyWord::CloseApp()
 		AfxMessageBox(_T("获取Word 对象失败,关闭操作失败"));
 		return;
 	}
-	else
+
+	m_wdDocs = m_wdApp.GetDocuments();
+	short docNum = (short)m_wdDocs.GetCount();
+
+	//有word程序打开，但是没有打开文档，则关闭程序（防止word后台运行，影响计算机运行速度）
+	if(docNum <= 0) 
 	{
 		m_wdApp.Quit(vOpt,vOpt,vOpt);
 		m_wdRange.ReleaseDispatch();  
