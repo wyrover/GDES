@@ -17,6 +17,7 @@
 // 变量列表管理辅助类
 #include "DataListHelper.h"
 
+#include "FuncFieldHelper.h"
 // CMFCPropertyGridCtrl控件的辅助类
 #include "MFCPropertyGridCtrlHelper.h"
 #include "PropertyDataUpdater.h"

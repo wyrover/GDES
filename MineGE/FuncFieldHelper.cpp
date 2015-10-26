@@ -119,3 +119,19 @@ bool FuncFieldHelper::RemoveField(const CString& f, const CString& type, const C
 	entry.Format(_T("%s%s%s"), type, SEPARATOR, field);
 	return ArxDictHelper::RemoveEntry(FUNC_FIELD_DICT, f, entry);
 }
+
+bool FuncFieldHelper::GetFuncsByType( const CString& type, AcStringArray& funcs )
+{
+	AcStringArray allFuncs;
+	if(!GetFunctions(allFuncs)) return false;
+	for(int i = 0; i < allFuncs.length(); i++)
+	{
+		AcStringArray types;
+		GetTypes(allFuncs[i].kACharPtr(),types);
+		if(types.find(type) != -1)
+		{
+			funcs.append(allFuncs[i]);
+		}
+	}
+	return true;
+}

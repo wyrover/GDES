@@ -4,7 +4,8 @@
 #include "msword.h"  
   
 #define wdCharacter 1  
-#define wdLine 5  
+#define wdLine 5 
+#define wdStory 6
 #define wdCell 12  
 #define wdExtend 1  
 #define wdMove 0  
@@ -63,7 +64,7 @@ public:
     void CloseApp();   
   
     //**********************文本书写操作*****************************************  
-    void WriteText(CString szText);        //当前光标处写文本 
+	void WriteText(CString szText,long alignment = wdAlignParagraphJustify);        //当前光标处写文本 
 	void SetFont(CString fonName,int fontSize);
     void WriteNewLineText(CString szText, int nLineCount = 1); //换N行写字  
     void WriteEndLine(CString szText);    //文档结尾处写文本  
@@ -89,7 +90,8 @@ public:
 	//定位至书签
 	BOOL Goto(const CString& strBMark);
 
-    void MoveToFirst();  
+    void MoveToFirst(); 
+	void MoveToEnd();
     void MoveToNextPage();  
     void TypeParagraph();  
     void PasteAndFormat();  

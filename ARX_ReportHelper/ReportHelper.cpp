@@ -9,6 +9,7 @@
 #include "GasPumpDlg.h"
 #include "MEREDlg.h"
 #include "config.h"
+#include "../MineGE/HelperClass.h"
 
 static CString GetAppPathDir()
 {
@@ -299,4 +300,20 @@ void ReportHelper::ShowReleatedInfoDlg()
 	bookMks.append(_T("ReleatInfo_YesOrNo"));
 	dlg.setBookMarks(bookMks);
 	dlg.DoModal();
+}
+
+void ReportHelper::CreatDrillReport()
+{
+	CAcModuleResourceOverride myResources;
+
+	AcDbObjectIdArray objIds;
+	DrawHelper::FindMineGEs( _T( "DrillGE" ), objIds );
+	if( objIds.isEmpty() ) 
+	{
+		AfxMessageBox(_T("系统中未发现钻孔！"));
+		return;
+	}
+
+	CString outName =_T("高位钻孔参数设计报告");
+	if(!SaveAndOpenReport(outName)) return;
 }

@@ -408,9 +408,12 @@ void CmyWord::CloseApp()
 	}
 }  
   
-void CmyWord::WriteText(CString szText)  
+void CmyWord::WriteText(CString szText,long alignment)  
 {  
-    m_wdSel.TypeText(szText);  
+	m_wdSel.TypeText(szText);
+	_ParagraphFormat format = m_wdSel.GetParagraphFormat();
+	format.SetAlignment(alignment);
+	m_wdSel.SetParagraphFormat(format);
 }  
   
 void CmyWord::WriteNewLineText(CString szText, int nLineCount /**//* = 1 */)  
@@ -718,5 +721,10 @@ void CmyWord::SetFont( CString fonName,int fontSize )
 	font.SetSize(fontSize);
 	font.SetName(fonName);
 	m_wdSel.SetFont(font);
+}
+
+void CmyWord::MoveToEnd()
+{
+	m_wdSel.EndKey(COleVariant((short)wdStory),COleVariant((short)0));
 }
 CmyWord* MyWord = 0;

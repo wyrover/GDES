@@ -266,8 +266,8 @@ BOOL DataListDlg::OnInitDialog()
 static void GetGasTunnelFields(AcStringArray& fields)
 {
 	fields.append(_T("路径"));
-	fields.append(_T("总摩擦阻力"));
-	fields.append(_T("总局部阻力"));
+	fields.append(_T("总摩擦阻力(Pa)"));
+	fields.append(_T("总局部阻力(Pa)"));
 }
 
 void DataListDlg::UpdateData()

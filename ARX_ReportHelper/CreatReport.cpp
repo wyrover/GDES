@@ -5,6 +5,8 @@
 #include "config.h"
 
 #include "ReportDataHelper.h"
+#include "../MineGE/HelperClass.h"
+#include "../MineGE/FieldInfoHelper.h"
 
 static CString GetAppPathDir()
 {
@@ -384,6 +386,119 @@ static void SetFieldsValue()
 	//MyWord->SetSeekView(mineName,wdAlignParagraphJustify,wdSeekCurrentPageHeader,_T("{{MineName_Header}}"));
 }
 
+//高位钻孔参数报告
+static void DealIntListDatas( const CString& field, CString& data )
+{
+	CString dataDirName = _T( "Datas\\" );
+	CString fileName;
+	fileName =BuildPath ( BuildPath( GetAppPathDir(), dataDirName ),_T( "瓦斯抽采-字符串-整数列表.txt" ) );
+
+	AcIfstream inFile( fileName );
+	while(!inFile.eof())
+	{
+		ACHAR cIntIdx[_MAX_PATH], cFiled[_MAX_PATH],cData[_MAX_PATH];
+		inFile >> cFiled >> cIntIdx >> cData;
+		if(inFile.fail()) break;
+		CString strIdx,strF;
+		strIdx.Format(_T("%s"),cIntIdx);
+		strF.Format(_T("%s"),cFiled);
+		if(field == strF && data == strIdx)
+		{
+			data.Format(_T("%s"),cData);
+			//acutPrintf(_T("\n字段:%s\t整数索引:%s\t对应值:%s\n"),field,strIdx,data);
+		}
+	}
+
+	inFile.close();
+}
+
+static bool GetFuncs(const CString& type, AcStringArray& funcs, AcDbObjectIdArray& objIds)
+{
+	DrawHelper::FindMineGEs(type, objIds);
+	int GENum = objIds.length();
+	if (GENum <= 0)
+	{
+		//AfxMessageBox(_T("系统中未发现钻孔！"));
+		return false;
+	}
+	return FuncFieldHelper::GetFuncsByType(type,funcs);	
+}
+
+static bool GetFieldsDatas(const CString& type, const CString& func, const AcDbObjectId& objId,AcStringArray& fields,AcStringArray& datas)
+{
+	fields.removeAll();
+	datas.removeAll();
+	if(!FuncFieldHelper::GetFields(func,type,fields)) return false;
+	for(int i = 0; i < fields.length(); i++)
+	{
+		CString strData;
+		if(!DataHelper::GetPropertyData(objId,fields[i].kACharPtr(),strData)) return false;
+		DealIntListDatas(fields[i].kACharPtr(),strData);
+		datas.append(strData);
+	}
+
+	return true;
+}
+
+static void WriteDrillDataToReport()
+{
+	MyWord->WriteText(_T("高位钻孔参数设计报告"),wdAlignParagraphCenter);
+	MyWord->TypeParagraph();
+
+	CString GEType = _T("DrillGE");
+	AcStringArray funcs;
+	AcDbObjectIdArray objIds;
+	if(!GetFuncs(GEType,funcs,objIds))
+	{
+		//AfxMessageBox(_T("系统中未发现钻孔！"));
+		MyWord->WriteText(_T("系统中未发现钻孔!!"),wdAlignParagraphJustify);
+		MyWord->TypeParagraph();
+		return;
+	}
+	funcs.remove(_T("高位钻孔参数计算"));
+	for (int i = 0; i < objIds.length(); i++)
+	{
+		CString tmp;
+		tmp.Format(_T("第%d#钻孔参数："),i+1);
+		MyWord->WriteText(tmp,wdAlignParagraphJustify);
+		MyWord->TypeParagraph();
+		MyWord->TypeParagraph();
+
+		for (int j =0 ; j < funcs.length(); j++)
+		{
+			MyWord->WriteText(funcs[j].kACharPtr(),wdAlignParagraphJustify);
+			MyWord->TypeParagraph();
+
+			AcStringArray fields,datas;
+			if(!GetFieldsDatas(_T("DrillGE"),funcs[j].kACharPtr(),objIds[i],fields,datas)) return;
+		
+			int rows = fields.length() + 1;
+			if(rows <= 0) return;
+			//写表头
+			MyWord->CreateTable(rows,3);
+			MyWord->SetTableText(1,1,_T("属性"));
+			MyWord->SetTableText(1,2,_T("值"));
+			MyWord->SetTableText(1,3,_T("备注"));
+			
+			for (int k = 0; k < fields.length(); k++)
+			{
+				MyWord->SetTableText(2+k,1,fields[k].kACharPtr());
+				MyWord->SetTableText(2+k,2,datas[k].kACharPtr());
+				
+				FieldInfo filedInfo;
+				FieldInfoHelper::ReadFieldInfo(GEType,fields[k].kACharPtr(),filedInfo);
+
+				MyWord->SetTableText(2+k,3,filedInfo.m_descr);
+				//acutPrintf(_T("\n功能:%s\t字段:%s\t值:%s\n"),funcs[j].kACharPtr(),fields[k].kACharPtr(),datas[k].kACharPtr());
+			}
+			MyWord->MoveToEnd();
+			MyWord->TypeParagraph();
+
+		}
+		//acutPrintf(_T("\n功能:%s"),funcs[i].kACharPtr());
+	}
+}
+
 static BOOL SaveReport(CString savePath)
 {
 	if(CheckDocIsUsing(savePath)) return FALSE;
@@ -444,7 +559,7 @@ static bool wordOprate(CString savePath)
 		return false;
 	}
 
-	//WriteRCUDataToReport();
+	WriteDrillDataToReport();
 	bool ret;
 	if(!SaveReport(savePath)) ret = false;
 	else ret = true;
