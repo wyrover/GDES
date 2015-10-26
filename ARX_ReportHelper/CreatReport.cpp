@@ -440,6 +440,86 @@ static bool GetFieldsDatas(const CString& type, const CString& func, const AcDbO
 	return true;
 }
 
+//把字段信息中的m_descr处理成单位，没有单位则为空
+static void DealUnits(CString& fieldDescr)
+{
+	if (-1 == fieldDescr.Find(_T("单位")))
+	{
+		//acutPrintf(fieldDescr);
+		fieldDescr = _T("");
+		return;
+	}
+
+	//fieldDescr.Left(_T("("));
+	fieldDescr.Replace(_T('：'),_T(':'));
+	fieldDescr.Replace(_T('（'),_T('('));
+	int st = fieldDescr.Find(_T(':'));
+	int ed = fieldDescr.Find(_T('('));
+	if(-1 == ed) ed = fieldDescr.GetLength();
+	fieldDescr = fieldDescr.Mid(st+1,ed-st-1);
+}
+
+//处理精度
+static void DealTolrance(const CString& data,CString& tolData)
+{
+	if(data.IsEmpty()) return;
+	if (-1 == data.Find(_T(".")))
+	{
+		tolData = data;
+		return;
+	}
+	double dData = _tstof(data);
+	tolData.Format(_T("%.4f"),dData);
+}
+
+static void FillTables(int index, const CString& type, const CString& field, const CString& data)
+{
+	MyWord->SetTableText(2+index,1,field,10,0);
+
+	FieldInfo filedInfo;
+	FieldInfoHelper::ReadFieldInfo(type,field,filedInfo);
+
+	CString unit = filedInfo.m_descr;
+	bool enable = filedInfo.m_enable;
+	DealUnits(unit);
+	CString tolData;
+	DealTolrance(data,tolData);
+	CString dataUnit = tolData + unit;
+	MyWord->SetTableText(2+index,2,dataUnit);
+
+	//acutPrintf(_T("\n功能:%s\t字段:%s\t值:%s\n"),funcs[j].kACharPtr(),fields[k].kACharPtr(),datas[k].kACharPtr());
+}
+
+static void CreatDrillTable(const CString& type, const CString& func, const AcDbObjectId& objId)
+{
+	AcStringArray fields,datas;
+	if(!GetFieldsDatas(type,func,objId,fields,datas)) return;
+
+	int rows = fields.length() + 1;
+	if(rows <= 0) return;
+	//写表头
+	MyWord->CreateTable(rows,2);
+	MyWord->SetTableText(1,1,_T("参数"),10,0);
+	MyWord->SetTableText(1,2,_T("值"));
+
+	for (int k = 0; k < fields.length(); k++)
+	{
+		FillTables(k,type,fields[k].kACharPtr(),datas[k].kACharPtr());
+	}
+}
+
+static void CreatDrillTables(const CString& type, const AcStringArray& funcs,const AcDbObjectId& objId)
+{
+	for (int j =0 ; j < funcs.length(); j++)
+	{
+		MyWord->WriteText(funcs[j].kACharPtr(),wdAlignParagraphJustify);
+		MyWord->TypeParagraph();
+		CreatDrillTable(type,funcs[j].kACharPtr(),objId);
+		MyWord->MoveToEnd();
+		MyWord->TypeParagraph();
+	}
+}
+
 static void WriteDrillDataToReport()
 {
 	MyWord->WriteText(_T("高位钻孔参数设计报告"),wdAlignParagraphCenter);
@@ -463,39 +543,7 @@ static void WriteDrillDataToReport()
 		MyWord->WriteText(tmp,wdAlignParagraphJustify);
 		MyWord->TypeParagraph();
 		MyWord->TypeParagraph();
-
-		for (int j =0 ; j < funcs.length(); j++)
-		{
-			MyWord->WriteText(funcs[j].kACharPtr(),wdAlignParagraphJustify);
-			MyWord->TypeParagraph();
-
-			AcStringArray fields,datas;
-			if(!GetFieldsDatas(_T("DrillGE"),funcs[j].kACharPtr(),objIds[i],fields,datas)) return;
-		
-			int rows = fields.length() + 1;
-			if(rows <= 0) return;
-			//写表头
-			MyWord->CreateTable(rows,3);
-			MyWord->SetTableText(1,1,_T("属性"));
-			MyWord->SetTableText(1,2,_T("值"));
-			MyWord->SetTableText(1,3,_T("备注"));
-			
-			for (int k = 0; k < fields.length(); k++)
-			{
-				MyWord->SetTableText(2+k,1,fields[k].kACharPtr());
-				MyWord->SetTableText(2+k,2,datas[k].kACharPtr());
-				
-				FieldInfo filedInfo;
-				FieldInfoHelper::ReadFieldInfo(GEType,fields[k].kACharPtr(),filedInfo);
-
-				MyWord->SetTableText(2+k,3,filedInfo.m_descr);
-				//acutPrintf(_T("\n功能:%s\t字段:%s\t值:%s\n"),funcs[j].kACharPtr(),fields[k].kACharPtr(),datas[k].kACharPtr());
-			}
-			MyWord->MoveToEnd();
-			MyWord->TypeParagraph();
-
-		}
-		//acutPrintf(_T("\n功能:%s"),funcs[i].kACharPtr());
+		CreatDrillTables(GEType,funcs,objIds[i]);
 	}
 }
 
@@ -509,6 +557,8 @@ static bool wordOprate(CString templPath,CString savePath,CString& mineName)
 {
 	AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
 	if(CheckDocIsUsing(templPath)) return false;
+	if(CheckDocIsUsing(savePath)) return false;
+
 	MyWord->CreateApp();
 	//MyWord->ShowApp();
 	if(!MyWord->Open(/*strPath*/templPath))
@@ -550,6 +600,8 @@ static bool wordOprate(CString templPath,CString savePath,CString& mineName)
 static bool wordOprate(CString savePath)
 {
 	AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
+	if(CheckDocIsUsing(savePath)) return false;
+
 	if(!MyWord->CreateDocuments())
 	{
 		return false;

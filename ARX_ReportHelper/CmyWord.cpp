@@ -55,11 +55,15 @@ BOOL CmyWord::isUsing(CString fileName)
 	IUnknown *pUnk = NULL;
 
 	HRESULT hr = ::GetActiveObject(clsid,NULL,&pUnk);
-	if(FAILED(hr)|| pUnk == NULL) return FALSE;
+	if(FAILED(hr)|| pUnk == NULL) return TRUE;
 	
+	hr = pUnk->QueryInterface(IID_IDispatch, (LPVOID *)&m_wdApp);
+	if(FAILED(hr)) return TRUE;
+
 	_Application wdApp;
 	hr = pUnk->QueryInterface(IID_IDispatch, (LPVOID *)&wdApp);
-	if(FAILED(hr)) return FALSE;
+	if(FAILED(hr)) return TRUE;
+
 
 	Documents wdDocs = wdApp.GetDocuments();
 	short docNum = (short)wdDocs.GetCount();
@@ -72,17 +76,62 @@ BOOL CmyWord::isUsing(CString fileName)
 		return FALSE;
 	}
 
-	_Document  wdDoc;
-	wdDoc = wdApp.GetActiveDocument(); 
-	if(wdDoc != NULL)
+	for (short i = 1; i <= docNum; i++)
 	{
-		CString bstrName = wdDoc.GetFullName(); 
+		COleVariant vIndex(i);
+
+		_Document  wdDoc;
+		wdDoc.AttachDispatch(wdDocs.Item(vIndex));
+
+		CString bstrName = wdDoc.GetFullName();
+		acutPrintf(_T("wordÃû³Æ:%s\n"),bstrName);
 		if(bstrName == fileName)
 		{
 			return TRUE;
 		}
 	}
+
+	//_Document  wdDoc;
+	//wdDoc = wdApp.GetActiveDocument(); 
+	//if(wdDoc != NULL)
+	//{
+	//	CString bstrName = wdDoc.GetFullName(); 
+	//	if(bstrName == fileName)
+	//	{
+	//		return TRUE;
+	//	}
+	//}
 	return FALSE;
+
+
+	//for (short i = 0; i < docNum; i++)
+	//{
+	//	COleVariant vIndex(i);
+
+	//	m_wdDoc.AttachDispatch(m_wdDocs.Item(vIndex));
+	//	//VARIANT vParam;
+	//	//vParam.vt = VT_I4;
+	//	//vParam.lVal = i;
+
+	//	CString bstrName = m_wdDoc.GetFullName();
+	//	acutPrintf(_T("wordÃû³Æ:%s\n"),bstrName);
+	//	if(bstrName == fileName)
+	//	{
+	//		return TRUE;
+	//	}
+	//}
+
+	////_Document  wdDoc;
+	////wdDoc = wdApp.GetActiveDocument(); 
+	////if(wdDoc != NULL)
+	////{
+	////	CString bstrName = wdDoc.GetFullName(); 
+	////	if(bstrName == fileName)
+	////	{
+	////		return TRUE;
+	////	}
+	////}
+	//return FALSE;
 
 }
 //²Ù×÷  

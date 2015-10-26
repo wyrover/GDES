@@ -244,6 +244,8 @@ static BOOL SaveReport(CString savePath)
 static bool wordOprate(CString savePath,const AcDbObjectId& drill_site)
 {
 	AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
+	if(CheckDocIsUsing(savePath)) return false;
+
 	if(!MyWord->CreateDocuments())
 	{
 		return false;
