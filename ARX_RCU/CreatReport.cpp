@@ -102,7 +102,7 @@ static void CreatCoalTable(const CoalSurfaceLink& cs_link)
 	MyWord->SetTableText(1,1,_T("Ãººñ(m)"));
 	MyWord->SetTableText(1,2,_T("Çã½Ç(¶È)"));
 	MyWord->SetTableText(1,3,_T("×ê¿×³é²É°ë¾¶(m)"));
-	MyWord->SetTableText(1,4,_T("³é²É¸ß¶È(m)"));
+	MyWord->SetTableText(1,4,_T("³é²ÉÐ±³¤(m)"));
 	MyWord->SetTableText(1,5,_T("³é²É¿í¶È(m)"));
 
 	CString value;
@@ -112,9 +112,9 @@ static void CreatCoalTable(const CoalSurfaceLink& cs_link)
 	MyWord->SetTableText(2,2,value);
 	value.Format(_T("%.2f"),cs_link.m_gas_radius);
 	MyWord->SetTableText(2,3,value);
-	value.Format(_T("%.2f"),cs_link.m_height);
+	value.Format(_T("%.2f"),cs_link.m_height + 2*cs_link.m_gas_radius);
 	MyWord->SetTableText(2,4,value);
-	value.Format(_T("%.2f"),cs_link.m_width);
+	value.Format(_T("%.2f"),cs_link.m_width + 2*cs_link.m_gas_radius);
 	MyWord->SetTableText(2,5,value);
 	//MyWord->NoneSelectMoveDown(rows,5);
 	MyWord->MoveToEnd();

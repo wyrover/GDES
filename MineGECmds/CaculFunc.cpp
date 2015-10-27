@@ -974,7 +974,7 @@ bool CaculFunc::highDrillDisCacul()
 	double fBeita = _tstof(strBeita);
 	double fELenth = _tstof(strELenth);
 
-	double part1 = sin(AngleToArc(fBeita));
+	double part1 = cos(AngleToArc(fBeita));
 	double part2 = cos(AngleToArc(fAlpha));
 	double part3 = cos(AngleToArc(b));
 	if(LESSTHANZERO(part3))

@@ -10,6 +10,7 @@
 #include "MEREDlg.h"
 #include "config.h"
 #include "../MineGE/HelperClass.h"
+#include "../ArxHelper/ArxUtilHelper.h"
 
 static CString GetAppPathDir()
 {
@@ -103,7 +104,7 @@ static BOOL SaveAndOpenReport(CString tplName,CString outName,CString mineName =
 	return TRUE;
 }
 
-static BOOL SaveAndOpenReport(CString outName)
+static BOOL SaveAndOpenReport(const CString& outName, AcDbObjectId& objId)
 {
 	TCHAR szFileFilter[] = _T("doc文档(*.doc)|*.doc||");
 	TCHAR szFileExt[] = _T("doc");
@@ -142,7 +143,7 @@ static BOOL SaveAndOpenReport(CString outName)
 	//初始化com
 	if(initword())
 	{
-		if(!CreatReport(selectedPath)) 
+		if(!CreatReport(selectedPath,objId)) 
 		{
 			//卸载com
 			uninitword();
@@ -163,6 +164,39 @@ static BOOL SaveAndOpenReport(CString outName)
 		}
 	}
 	return TRUE;
+}
+
+//处理输出报告名称
+static void DealReportName(const AcDbObjectId& objId, CString& fileName)
+{
+	if(objId.isNull())
+	{
+		fileName = _T("所有") + fileName;
+		return;
+	}
+	CString name;
+	DataHelper::GetPropertyData(objId,_T("钻孔名称"),name);
+	if(name.IsEmpty())
+	{
+		fileName = _T("(无名称)") + fileName;
+	}
+	else
+	{
+		fileName =name + _T("#") + fileName;
+	}
+}
+
+static bool CheackDrillGE(CString& outName)
+{
+	AcDbObjectIdArray objIds;
+	DrawHelper::FindMineGEs( _T( "DrillGE" ), objIds );
+	if( objIds.isEmpty() ) 
+	{
+		AfxMessageBox(_T("系统中未发现钻孔！"));
+		return false;
+	}
+	outName =_T("高位钻孔参数计算结果");
+	return true;
 }
 
 void ReportHelper::CreatReportHelper()
@@ -234,18 +268,27 @@ void ReportHelper::CreatDrillReport()
 {
 	CAcModuleResourceOverride myResources;
 
-	AcDbObjectIdArray objIds;
-	DrawHelper::FindMineGEs( _T( "DrillGE" ), objIds );
-	if( objIds.isEmpty() ) 
-	{
-		AfxMessageBox(_T("系统中未发现钻孔！"));
-		return;
-	}
-
-	CString outName =_T("高位钻孔参数设计报告");
-	if(!SaveAndOpenReport(outName)) return;
+	CString outName;
+	if(!CheackDrillGE(outName)) return;
+	AcDbObjectId objId = AcDbObjectId::kNull;
+	DealReportName(objId,outName);
+	if(!SaveAndOpenReport(outName,objId)) return;
 }
 
+void ReportHelper::CreatDrillReportOnlyOne()
+{
+	CAcModuleResourceOverride myResources;
+
+	CString outName;
+	if(!CheackDrillGE(outName)) return;
+	AcDbObjectId objId = ArxUtilHelper::SelectObject( _T( "请选择所需要输出计算结果的钻孔:" ) );
+	if( objId.isNull() ) return;
+	if( !ArxUtilHelper::IsEqualType( _T( "DrillGE" ), objId )) return;
+
+	DealReportName(objId,outName);
+	if(!SaveAndOpenReport(outName,objId)) return;
+
+}
 void BaseReportHelper::ListShow()
 {
 	CAcModuleResourceOverride myResources;

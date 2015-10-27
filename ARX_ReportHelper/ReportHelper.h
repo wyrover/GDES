@@ -7,6 +7,7 @@ public:
 	static void CreatReportHelper();
 	static void CreatBaseReport();
 	static void CreatDrillReport();
+	static void CreatDrillReportOnlyOne();
 	static void OpenCHMFile();
 	static void OpenCHMFile2();
 	static void OpenHelpCHMFile();

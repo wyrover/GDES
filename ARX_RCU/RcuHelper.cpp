@@ -207,6 +207,7 @@ bool RcuHelper::CaculCoalSurfParam( DrillSiteLink& ds_link, CoalSurfaceLink& cs_
 
 	//计算煤层面的抽采范围宽度和高度
 	rcu.drillExtent(cs_link.m_width, cs_link.m_height);
+	//acutPrintf(_T("\n抽采宽度:%.2lf,抽采高度:%.2lf\n"),cs_link.m_width, cs_link.m_height);
 	//计算煤层面(中心点坐标、法向量、走向向量、倾向向量)
 	AcGePoint3d cnt;
 	AcGeVector3d normV, headV, dipV;

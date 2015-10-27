@@ -429,6 +429,7 @@ static bool GetFieldsDatas(const CString& type, const CString& func, const AcDbO
 	fields.removeAll();
 	datas.removeAll();
 	if(!FuncFieldHelper::GetFields(func,type,fields)) return false;
+	fields.remove(_T("钻孔名称"));
 	for(int i = 0; i < fields.length(); i++)
 	{
 		CString strData;
@@ -518,7 +519,7 @@ static void CreatDrillTable(const CString& type, const CString& func, const AcDb
 	//写表头
 	MyWord->CreateTable(rows,2);
 	MyWord->SetTableText(1,1,_T("参数"),10,0);
-	MyWord->SetTableText(1,2,_T("值"));
+	MyWord->SetTableText(1,2,_T("数值"));
 
 	for (int k = 0; k < fields.length(); k++)
 	{
@@ -538,11 +539,51 @@ static void CreatDrillTables(const CString& type, const AcStringArray& funcs,con
 	}
 }
 
-static void WriteDrillDataToReport()
+static bool ReportOneDrill(const AcDbObjectId& objId,const CString& GEType, const AcStringArray& funcs)
 {
-	MyWord->WriteText(_T("高位钻孔参数设计报告"),wdAlignParagraphCenter);
+	CString name;
+	if(!DataHelper::GetPropertyData(objId,_T("钻孔名称"),name)) return false;
+	CString tmp = _T("高位钻孔参数计算结果");
+	if(name.IsEmpty()) 
+	{
+		tmp = _T("(无名称)") + tmp;
+	}
+	else
+	{
+		tmp = name + _T("#") + tmp;
+	}
+	MyWord->WriteText(tmp,wdAlignParagraphCenter);
 	MyWord->TypeParagraph();
+	CreatDrillTables(GEType,funcs,objId);
+	return true;
+}
 
+static bool ReportAllDrill(AcDbObjectIdArray& objIds,const CString& GEType, const AcStringArray& funcs)
+{
+	MyWord->WriteText(_T("高位钻孔参数计算结果"),wdAlignParagraphCenter);
+	MyWord->TypeParagraph();
+	for (int i = 0; i < objIds.length(); i++)
+	{
+		CString tmp = _T("钻孔参数：");
+		CString name;
+		if(!DataHelper::GetPropertyData(objIds[i],_T("钻孔名称"),name)) return false;
+		if(name.IsEmpty()) 
+		{
+			tmp = _T("(无名称)") + tmp;
+		}
+		else
+		{
+			tmp = name + _T("#") + tmp;
+		}
+		MyWord->WriteText(tmp,wdAlignParagraphJustify);
+		MyWord->TypeParagraph();
+		CreatDrillTables(GEType,funcs,objIds[i]);
+	}
+	return true;
+}
+
+static void WriteDrillDataToReport(const AcDbObjectId& objId)
+{
 	CString GEType = _T("DrillGE");
 	AcStringArray funcs;
 	AcDbObjectIdArray objIds;
@@ -554,13 +595,14 @@ static void WriteDrillDataToReport()
 		return;
 	}
 	funcs.remove(_T("高位钻孔参数计算"));
-	for (int i = 0; i < objIds.length(); i++)
+	funcs.remove(_T("孔口负压参数"));
+	if (objId.isNull())
 	{
-		CString tmp;
-		tmp.Format(_T("第%d#钻孔参数："),i+1);
-		MyWord->WriteText(tmp,wdAlignParagraphJustify);
-		MyWord->TypeParagraph();
-		CreatDrillTables(GEType,funcs,objIds[i]);
+		ReportAllDrill(objIds,GEType,funcs);
+	}
+	else
+	{
+		ReportOneDrill(objId,GEType,funcs);
 	}
 }
 
@@ -614,7 +656,7 @@ static bool wordOprate(CString templPath,CString savePath,CString& mineName)
 	return ret;
 }
 
-static bool wordOprate(CString savePath)
+static bool wordOprate(const CString& savePath, const AcDbObjectId& objId)
 {
 	AfxGetMainWnd()->BeginWaitCursor();//设置等待光标
 	if(CheckDocIsUsing(savePath)) return false;
@@ -628,7 +670,7 @@ static bool wordOprate(CString savePath)
 		return false;
 	}
 
-	WriteDrillDataToReport();
+	WriteDrillDataToReport(objId);
 	bool ret;
 	if(!SaveReport(savePath)) ret = false;
 	else ret = true;
@@ -701,9 +743,9 @@ bool CreatReport(const CString& tplPath,const CString& savePath,CString& mineNam
 	return wordOprate(tplPath,savePath,mineName);
 }
 
-bool CreatReport( const CString& savePath )
+bool CreatReport( const CString& savePath,const AcDbObjectId& objId )
 {
-	return wordOprate(savePath);
+	return wordOprate(savePath,objId);
 }
 void OpenDoc(const CString& docPath,BOOL isVisiable)
 {
