@@ -10,6 +10,11 @@ public:
 	static void OpenCHMFile();
 	static void OpenCHMFile2();
 	static void OpenHelpCHMFile();
+};
+
+class ARX_REPORTHELPER_DLLIMPEXP BaseReportHelper
+{
+public:
 	static void ListShow();
 	static void ShowGasPlanDlg();
 	static void ShowEPCMFDDlg();
@@ -18,5 +23,5 @@ public:
 	static void ShowGasPumpDlg();
 	static void ShowMeasureDlg();	//计量相关对话框
 	static void ShowReleatedInfoDlg();	//评判相关资料
-};
 
+};

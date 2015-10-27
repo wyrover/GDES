@@ -231,7 +231,7 @@ static void SetPumpTable()
 	MyWord->SetTableText(1,1,_T("抽采系统"));
 	MyWord->SetTableText(1,2,_T("抽采泵状态"));
 	MyWord->SetTableText(1,3,_T("型号"));
-	MyWord->SetTableText(1,4,_T("单泵最大抽采能力"));
+	MyWord->SetTableText(1,4,_T("单泵最大抽采能力(m3/min)"));
 
 	//填充抽采系统数据
 	for(int i = 2; i <= rows; i += 2)
@@ -463,13 +463,30 @@ static void DealUnits(CString& fieldDescr)
 static void DealTolrance(const CString& data,CString& tolData)
 {
 	if(data.IsEmpty()) return;
+
+	//小数点前面的0补全,并且除掉左右多余的0
 	if (-1 == data.Find(_T(".")))
 	{
 		tolData = data;
 		return;
 	}
-	double dData = _tstof(data);
-	tolData.Format(_T("%.4f"),dData);
+	CString strValue;
+	strValue.Format(_T("%.2f"),_tstof(data));
+	tolData = strValue;
+	tolData.Replace(_T("0"),_T(" "));	//替换0为空格
+	tolData.Trim();	//裁剪
+	tolData.Replace(_T(" "),_T("0"));
+	if(tolData[0] == _T('.')) tolData.Insert(0,_T("0"));
+	int lenth = tolData.GetLength();
+	if(0 >= lenth)
+	{
+		return;
+	}
+	if(tolData[lenth-1] == _T('.'))
+	{
+		tolData.Replace(_T("."),_T(" "));
+		tolData.Trim();	//裁剪
+	}
 }
 
 static void FillTables(int index, const CString& type, const CString& field, const CString& data)
@@ -485,6 +502,7 @@ static void FillTables(int index, const CString& type, const CString& field, con
 	CString tolData;
 	DealTolrance(data,tolData);
 	CString dataUnit = tolData + unit;
+	if(tolData.IsEmpty()) dataUnit = _T("NULL");
 	MyWord->SetTableText(2+index,2,dataUnit);
 
 	//acutPrintf(_T("\n功能:%s\t字段:%s\t值:%s\n"),funcs[j].kACharPtr(),fields[k].kACharPtr(),datas[k].kACharPtr());
@@ -541,7 +559,6 @@ static void WriteDrillDataToReport()
 		CString tmp;
 		tmp.Format(_T("第%d#钻孔参数："),i+1);
 		MyWord->WriteText(tmp,wdAlignParagraphJustify);
-		MyWord->TypeParagraph();
 		MyWord->TypeParagraph();
 		CreatDrillTables(GEType,funcs,objIds[i]);
 	}

@@ -24,7 +24,7 @@ struct GasPumpDataRecord
 		case 0: { static const CString title0(_T("抽采系统")); return title ? title0 : m_sysName; }
 		case 1: { static const CString title1(_T("抽采泵状态")); return title ? title1 : m_pumpState; }
 		case 2: { static const CString title2(_T("型号")); return title ? title2 : m_pumpType; }
-		case 3: { static const CString title2(_T("单泵最大抽采能力")); return title ? title2 : m_pumpAbility; }
+		case 3: { static const CString title2(_T("单泵最大抽采能力(m3/min)")); return title ? title2 : m_pumpAbility; }
 		default:{ static const CString emptyStr; return emptyStr; }
 		}
 	}

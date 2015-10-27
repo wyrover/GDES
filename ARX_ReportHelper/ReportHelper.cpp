@@ -230,78 +230,6 @@ void ReportHelper::CreatBaseReport()
 	if(!SaveAndOpenReport(tplName,outName,mineName)) return;
 }
 
-void ReportHelper::ListShow()
-{
-	CAcModuleResourceOverride myResources;
-	GasSysDlg dlg;
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowGasPlanDlg()
-{
-	CAcModuleResourceOverride myResources;
-	GasPlanDlg dlg;
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowEPCMFDDlg()
-{
-	CAcModuleResourceOverride myResources;
-	EPCMFDDlg dlg;
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowSelfManageDlg()
-{
-	CAcModuleResourceOverride myResources;
-	SelfManageDlg dlg;
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowInspectionDataDlg()
-{
-	CAcModuleResourceOverride myResources;
-	InspectionDataDlg dlg;
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowGasPumpDlg()
-{
-	CAcModuleResourceOverride myResources;
-	GasPumpDlg dlg;
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowMeasureDlg()
-{
-	CAcModuleResourceOverride myResources;
-	MEREDlg dlg;
-	dlg.setObjectName(RET_MERSURE_OBJCT_NAME);
-	dlg.setDesText(_T("抽采计量测点是否充足、计量器具是否符合计量标准要求"));
-	AcStringArray bookMks;
-	bookMks.append(_T("MESURE_Ret"));
-	bookMks.append(_T("MESURE_Method"));
-	bookMks.append(_T("MESURE_Conclusion"));
-	bookMks.append(_T("MESURE_YesOrNo"));
-	dlg.setBookMarks(bookMks);
-	dlg.DoModal();
-}
-
-void ReportHelper::ShowReleatedInfoDlg()
-{
-	CAcModuleResourceOverride myResources;
-	MEREDlg dlg;
-	dlg.setObjectName(RET_REALATE_OBJCT_NAME);
-	dlg.setDesText(_T("抽采效果评判用相关测试条件是否符合标准要求"));
-	AcStringArray bookMks;
-	bookMks.append(_T("ReleatInfo_Ret"));
-	bookMks.append(_T("ReleatInfo_Method"));
-	bookMks.append(_T("ReleatInfo_Conclusion"));
-	bookMks.append(_T("ReleatInfo_YesOrNo"));
-	dlg.setBookMarks(bookMks);
-	dlg.DoModal();
-}
-
 void ReportHelper::CreatDrillReport()
 {
 	CAcModuleResourceOverride myResources;
@@ -316,4 +244,76 @@ void ReportHelper::CreatDrillReport()
 
 	CString outName =_T("高位钻孔参数设计报告");
 	if(!SaveAndOpenReport(outName)) return;
+}
+
+void BaseReportHelper::ListShow()
+{
+	CAcModuleResourceOverride myResources;
+	GasSysDlg dlg;
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowGasPlanDlg()
+{
+	CAcModuleResourceOverride myResources;
+	GasPlanDlg dlg;
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowEPCMFDDlg()
+{
+	CAcModuleResourceOverride myResources;
+	EPCMFDDlg dlg;
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowSelfManageDlg()
+{
+	CAcModuleResourceOverride myResources;
+	SelfManageDlg dlg;
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowInspectionDataDlg()
+{
+	CAcModuleResourceOverride myResources;
+	InspectionDataDlg dlg;
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowGasPumpDlg()
+{
+	CAcModuleResourceOverride myResources;
+	GasPumpDlg dlg;
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowMeasureDlg()
+{
+	CAcModuleResourceOverride myResources;
+	MEREDlg dlg;
+	dlg.setObjectName(RET_MERSURE_OBJCT_NAME);
+	dlg.setDesText(_T("抽采计量测点是否充足、计量器具是否符合计量标准要求"));
+	AcStringArray bookMks;
+	bookMks.append(_T("MESURE_Ret"));
+	bookMks.append(_T("MESURE_Method"));
+	bookMks.append(_T("MESURE_Conclusion"));
+	bookMks.append(_T("MESURE_YesOrNo"));
+	dlg.setBookMarks(bookMks);
+	dlg.DoModal();
+}
+
+void BaseReportHelper::ShowReleatedInfoDlg()
+{
+	CAcModuleResourceOverride myResources;
+	MEREDlg dlg;
+	dlg.setObjectName(RET_REALATE_OBJCT_NAME);
+	dlg.setDesText(_T("抽采效果评判用相关测试条件是否符合标准要求"));
+	AcStringArray bookMks;
+	bookMks.append(_T("ReleatInfo_Ret"));
+	bookMks.append(_T("ReleatInfo_Method"));
+	bookMks.append(_T("ReleatInfo_Conclusion"));
+	bookMks.append(_T("ReleatInfo_YesOrNo"));
+	dlg.setBookMarks(bookMks);
+	dlg.DoModal();
 }

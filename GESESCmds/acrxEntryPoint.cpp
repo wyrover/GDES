@@ -98,42 +98,42 @@ public:
 
 	static void JL_GasSysDlg()
 	{
-		ReportHelper::ListShow();
+		BaseReportHelper::ListShow();
 	}
 
 	static void JL_GasPlanDlg()
 	{
-		ReportHelper::ShowGasPlanDlg();
+		BaseReportHelper::ShowGasPlanDlg();
 	}
 
 	static void JL_EPCMFDDlg()
 	{
-		ReportHelper::ShowEPCMFDDlg();
+		BaseReportHelper::ShowEPCMFDDlg();
 	}
 
 	static void JL_SelfManageDlg()
 	{
-		ReportHelper::ShowSelfManageDlg();
+		BaseReportHelper::ShowSelfManageDlg();
 	}
 
 	static void JL_InspectionDataDlg()
 	{
-		ReportHelper::ShowInspectionDataDlg();
+		BaseReportHelper::ShowInspectionDataDlg();
 	}
 
 	static void JL_GasPumpDlg()
 	{
-		ReportHelper::ShowGasPumpDlg();
+		BaseReportHelper::ShowGasPumpDlg();
 	}
 
 	static void JL_MeasureDlg()
 	{
-		ReportHelper::ShowMeasureDlg();
+		BaseReportHelper::ShowMeasureDlg();
 	}
 
 	static void JL_ReleatedInfoDlg()
 	{
-		ReportHelper::ShowReleatedInfoDlg();
+		BaseReportHelper::ShowReleatedInfoDlg();
 	}
 
 	static void JL_PumpSelect()
