@@ -536,6 +536,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="AddFunc"
+				>
+				<File
+					RelativePath=".\GetAddFuncDatas.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Include Files"
@@ -694,6 +702,14 @@
 				</File>
 				<File
 					RelativePath=".\ViewConfigSection.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="AddFunc"
+				>
+				<File
+					RelativePath=".\GetAddFuncDatas.h"
 					>
 				</File>
 			</Filter>

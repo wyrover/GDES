@@ -289,6 +289,28 @@ void ReportHelper::CreatDrillReportOnlyOne()
 	if(!SaveAndOpenReport(outName,objId)) return;
 
 }
+
+void ReportHelper::CreatAddFuncReport()
+{
+	CAcModuleResourceOverride myResources;
+
+	TCHAR szFileFilter[] = _T("doc文档(*.doc)|*.doc||");
+	TCHAR szFileExt[] = _T("doc");
+	CString defaultPath;
+	GetDocPath(defaultPath);
+	AcDbObjectId objId;
+	SingleDataObjectHelper::GetObjectId(_T("计算参数"),objId);
+	CString mineName;
+	DataHelper::GetPropertyData(objId,_T("矿名"),mineName);
+
+	CString fileName =  _T("Datas\\JL\\tpl\\tplAddF.doc");
+	CString outName = mineName + _T("瓦斯抽采达标生产能力核定");
+	CString tplName = BuildPath( GetAppPathDir(), fileName );
+
+	tplName = BuildPath( GetAppPathDir(), fileName );
+	if(!SaveAndOpenReport(tplName,outName,mineName)) return;
+}
+
 void BaseReportHelper::ListShow()
 {
 	CAcModuleResourceOverride myResources;

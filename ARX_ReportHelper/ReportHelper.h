@@ -6,6 +6,7 @@ class ARX_REPORTHELPER_DLLIMPEXP ReportHelper
 public:
 	static void CreatReportHelper();
 	static void CreatBaseReport();
+	static void CreatAddFuncReport();
 	static void CreatDrillReport();
 	static void CreatDrillReportOnlyOne();
 	static void OpenCHMFile();

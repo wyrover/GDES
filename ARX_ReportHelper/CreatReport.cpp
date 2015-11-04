@@ -4,6 +4,7 @@
 #include "CreatReport.h"
 #include "config.h"
 
+#include "GetAddFuncDatas.h"
 #include "ReportDataHelper.h"
 #include "../MineGE/HelperClass.h"
 #include "../MineGE/FieldInfoHelper.h"
@@ -107,12 +108,12 @@ static BOOL ReadDataFromFile(const CString& txtName,AcStringArray& names,AcStrin
 	return TRUE;
 }
 
-static BOOL ReadTableDataFromFile(const CString& txtName,AcStringArray& names,AcStringArray& datas)
+static BOOL ReadTableDatas(const CString& itemName,AcStringArray& names,AcStringArray& datas)
 {
 	names.removeAll();
 	datas.removeAll();
 	ArrayVector dataVector;
-	ReportDataHelper::ReadDatas(txtName,dataVector,2);
+	ReportDataHelper::ReadDatas(itemName,dataVector,2);
 	if(dataVector.empty()) return FALSE;
 	for(int i = 0; i < dataVector.size(); i++)
 	{
@@ -177,10 +178,10 @@ static void SetUndergroundSys()
 
 }
 
-static void SetTableVal(CString txtName)
+static void SetTableVal(CString itemName)
 {
 	AcStringArray bookMarks,datas;
-	ReadTableDataFromFile(txtName,bookMarks,datas);
+	ReadTableDatas(itemName,bookMarks,datas);
 	for(int i = 0; i < bookMarks.length(); i++)
 	{
 		if(!GoToBMark(bookMarks[i].kACharPtr())) continue;
@@ -272,15 +273,15 @@ static void SetPumpTable()
 	DeleteExcludeLine(_T("GasPump_Ret"));
 }
 
-static BOOL SetConclusionTable(CString txtName)
+static BOOL SetConclusionTable(CString itemName)
 {
 	AcStringArray bookMarks,datas;
-	if(!ReadTableDataFromFile(txtName,bookMarks,datas)) 
+	if(!ReadTableDatas(itemName,bookMarks,datas)) 
 	{
-		CString msg = _T("没有操作");
+		CString msg = _T("未完成");
 		if (bookMarks.isEmpty())
 		{
-			msg.Append(txtName);
+			msg.Append(itemName);
 		}
 		AfxMessageBox(msg);
 		return FALSE;
@@ -635,6 +636,24 @@ static bool wordOprate(CString templPath,CString savePath,CString& mineName)
 			MyWord->CloseApp();
 			AfxGetMainWnd()->EndWaitCursor();//结束等待光标
 			return false;
+		}
+	}
+
+	else if ( -1 != templPath.Find(_T("tplAddF")) )
+	{
+		AcStringArray bookMks,datas;
+		if(!GetAddFuncDatas::getAllDatas(bookMks,datas)) 
+		{
+			MyWord->CloseDocument();
+			MyWord->CloseApp();
+			AfxGetMainWnd()->EndWaitCursor();//结束等待光标
+			return false;
+		}
+		for( int i = 0; i < bookMks.length(); i++ )
+		{
+			MyWord->Goto(bookMks[i].kACharPtr());
+			MyWord->WriteText(datas[i].kACharPtr());
+			//acutPrintf(_T("第%d个数据书签:%s\t数据:%s\n"),i+1,bookMks[i].kACharPtr(),datas[i].kACharPtr());
 		}
 	}
 

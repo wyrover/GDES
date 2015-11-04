@@ -510,11 +510,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Miscellaneous Files"
-			Filter="reg;rgs;mak;clw;vsdir;vsz;css;inf;vcproj;csproj"
-			>
-		</Filter>
-		<Filter
 			Name="CGridListCtrlEx"
 			>
 			<Filter

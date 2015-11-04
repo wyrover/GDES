@@ -91,6 +91,11 @@ public:
 		ReportHelper::CreatBaseReport();
 	}
 
+	static void JL_CreatAddFuncReport()
+	{
+		ReportHelper::CreatAddFuncReport();
+	}
+
 	static void JL_CreatDrillReport()
 	{
 		ReportHelper::CreatDrillReport();
@@ -167,6 +172,7 @@ ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _OpenRules, OpenRules, ACRX_CMD_T
 ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _OpenRulesOwn, OpenRulesOwn, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _OpenHelpCHM, OpenHelpCHM, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _CreatBaseReport, CreatBaseReport, ACRX_CMD_TRANSPARENT, NULL )
+ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _CreatAddFuncReport, CreatAddFuncReport, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _CreatDrillReport, CreatDrillReport, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _CreatDrillReportOne, CreatDrillReportOne, ACRX_CMD_TRANSPARENT, NULL )
 ACED_ARXCOMMAND_ENTRY_AUTO( CGESESCmdsApp, JL, _GasSysDlg, GasSysDlg, ACRX_CMD_TRANSPARENT, NULL )
